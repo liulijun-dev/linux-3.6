@@ -329,6 +329,11 @@ static inline struct page *alloc_pages_exact_node(int nid, gfp_t gfp_mask,
 #ifdef CONFIG_NUMA
 extern struct page *alloc_pages_current(gfp_t gfp_mask, unsigned order);
 
+/**
+*<llj>该函数分配2^order个连续的物理页，并返回指向第一个页的指针。
+*如果分配出错，返回NULL</llj>
+*
+*/
 static inline struct page *
 alloc_pages(gfp_t gfp_mask, unsigned int order)
 {

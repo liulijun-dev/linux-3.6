@@ -1488,6 +1488,12 @@ struct sb_writers {
 #endif
 };
 
+/*
+ *<llj>
+ *存放已安装文件系统的有关信息。对于基于磁盘的文件系统，
+ *这类对象通常存在于物理介质的最开头部分：文件系统控制块（filesystem control block）
+ </llj>
+ */
 struct super_block {
 	struct list_head	s_list;		/* Keep this first */
 	dev_t			s_dev;		/* search index; _not_ kdev_t */
