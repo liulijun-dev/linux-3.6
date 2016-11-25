@@ -100,6 +100,11 @@ extern unsigned int full_name_hash(const unsigned char *, unsigned int);
 # endif
 #endif
 
+/**
+ *<llj>
+ *存放目录项与对应文件进行链接的有关信息
+ *</llj>
+ */
 struct dentry {
 	/* RCU lookup touched fields */
 	unsigned int d_flags;		/* protected by d_lock */

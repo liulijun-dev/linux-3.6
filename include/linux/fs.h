@@ -2022,8 +2022,8 @@ struct file_system_type {
 		       const char *, void *);
 	void (*kill_sb) (struct super_block *);
 	struct module *owner;
-	struct file_system_type * next;
-	struct hlist_head fs_supers;
+	struct file_system_type * next;/*<llj>单向链表</llj>*/
+	struct hlist_head fs_supers;/*<llj>双向链表</llj>*/
 
 	struct lock_class_key s_lock_key;
 	struct lock_class_key s_umount_key;
