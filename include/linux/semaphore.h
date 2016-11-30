@@ -14,9 +14,9 @@
 
 /**
  *<llj>
- *ä¿¡å·é‡ï¼ˆsemaphoreï¼‰æ˜¯ç”¨äºŽä¿æŠ¤ä¸´ç•ŒåŒºçš„ä¸€ç§å¸¸ç”¨æ–¹æ³•ï¼Œä»–çš„ç”¨æ³•å’Œè‡ªæ—‹é”ç±»ä¼¼ï¼Œ
- *ä½†æ˜¯ï¼Œä¸Žè‡ªæ—‹é”ä¸åŒçš„æ˜¯ï¼Œå½“èŽ·å–ä¸åˆ°ä¿¡å·é‡æ—¶ï¼Œè¿›ç¨‹ä¸ä¼šåŽŸåœ°æ‰“è½¬ï¼Œè€Œæ˜¯è¿›å…¥ä¼‘
- *çœ ç­‰çŠ¶æ€
+ *ÐÅºÅÁ¿£¨semaphore£©ÊÇÓÃÓÚ±£»¤ÁÙ½çÇøµÄÒ»ÖÖ³£ÓÃ·½·¨£¬ËûµÄÓÃ·¨ºÍ×ÔÐýËøÀàËÆ£¬
+ *µ«ÊÇ£¬Óë×ÔÐýËø²»Í¬µÄÊÇ£¬µ±»ñÈ¡²»µ½ÐÅºÅÁ¿Ê±£¬½ø³Ì²»»áÔ­µØ´ò×ª£¬¶øÊÇ½øÈëÐÝ
+ *ÃßµÈ×´Ì¬
  *</llj>
  */
 /* Please don't access any members of this structure directly */
