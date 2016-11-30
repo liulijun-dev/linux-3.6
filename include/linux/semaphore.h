@@ -12,6 +12,13 @@
 #include <linux/list.h>
 #include <linux/spinlock.h>
 
+/**
+ *<llj>
+ *信号量（semaphore）是用于保护临界区的一种常用方法，他的用法和自旋锁类似，
+ *但是，与自旋锁不同的是，当获取不到信号量时，进程不会原地打转，而是进入休
+ *眠等状态
+ *</llj>
+ */
 /* Please don't access any members of this structure directly */
 struct semaphore {
 	raw_spinlock_t		lock;
