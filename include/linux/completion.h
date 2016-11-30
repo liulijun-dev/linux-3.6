@@ -76,6 +76,7 @@ static inline void init_completion(struct completion *x)
 	init_waitqueue_head(&x->wait);
 }
 
+/*<llj>the followings functions are implemented in /kernel/sched/core.c</llj>*/
 extern void wait_for_completion(struct completion *);
 extern int wait_for_completion_interruptible(struct completion *x);
 extern int wait_for_completion_killable(struct completion *x);
