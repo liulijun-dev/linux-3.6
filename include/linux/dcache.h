@@ -103,6 +103,7 @@ extern unsigned int full_name_hash(const unsigned char *, unsigned int);
 /**
  *<llj>
  *存放目录项与对应文件进行链接的有关信息
+ *每个目录和文件都对应一个dentry
  *</llj>
  */
 struct dentry {

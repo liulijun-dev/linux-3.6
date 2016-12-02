@@ -775,6 +775,9 @@ struct posix_acl;
 #define IOP_NOFOLLOW	0x0004
 
 /*
+ *<llj>
+ *对应着磁盘上的文件
+ *</llj>
  * Keep mostly read-only and often accessed (especially for
  * the RCU path lookup and 'stat' data) fields at the beginning
  * of the 'struct inode'
@@ -837,7 +840,7 @@ struct inode {
 	struct list_head	i_lru;		/* inode LRU list */
 	struct list_head	i_sb_list;
 	union {
-		struct hlist_head	i_dentry;
+		struct hlist_head	i_dentry;/*<llj>该inode对应的dentry</llj>*/
 		struct rcu_head		i_rcu;
 	};
 	u64			i_version;
