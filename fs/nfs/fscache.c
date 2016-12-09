@@ -189,7 +189,7 @@ void nfs_fscache_init_inode_cookie(struct inode *inode)
  * Get the per-inode cache cookie for an NFS inode.
  */
 static void nfs_fscache_enable_inode_cookie(struct inode *inode)
-{
+{ 
 	struct super_block *sb = inode->i_sb;
 	struct nfs_inode *nfsi = NFS_I(inode);
 

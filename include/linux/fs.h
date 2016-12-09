@@ -835,6 +835,13 @@ struct inode {
 
 	unsigned long		dirtied_when;	/* jiffies of first dirtying */
 
+          /**
+     *<llj>
+     *系统中所有的inode都存放在hash_table，以方便对某个inode的快速查找，
+     *hash算法是通过超级块和inode number计算的，这两项组合可以唯一确定
+     *一个inode
+     *</llj>
+     */
 	struct hlist_node	i_hash;
 	struct list_head	i_wb_list;	/* backing dev IO list */
 	struct list_head	i_lru;		/* inode LRU list */
@@ -1022,6 +1029,11 @@ static inline int ra_has_index(struct file_ra_state *ra, pgoff_t index)
 #define FILE_MNT_WRITE_TAKEN	1
 #define FILE_MNT_WRITE_RELEASED	2
 
+/**
+ *<llj>
+ *代表被打开的文件
+ *</llj>
+ */
 struct file {
 	/*
 	 * fu_list becomes invalid after file_free is called and queued via
@@ -1525,7 +1537,7 @@ struct super_block {
 #ifdef CONFIG_SMP
 	struct list_head __percpu *s_files;
 #else
-	struct list_head	s_files;
+	struct list_head	s_files; /*<llj>本文件系统实例中，所有已经打开的file对象</llj>*/
 #endif
 	struct list_head	s_mounts;	/* list of mounts; _not_ for fs use */
 	/* s_dentry_lru, s_nr_dentry_unused protected by dcache.c lru locks */
@@ -2024,7 +2036,7 @@ struct file_system_type {
 	struct dentry *(*mount) (struct file_system_type *, int,
 		       const char *, void *);
 	void (*kill_sb) (struct super_block *);
-	struct module *owner;
+	struct module *owner;/*<llj>指向module的指针，仅当文件系统类型是以模块方式注册时，owner才有效</llj>*/
 	struct file_system_type * next;/*<llj>单向链表</llj>*/
 	struct hlist_head fs_supers;/*<llj>双向链表</llj>*/
 

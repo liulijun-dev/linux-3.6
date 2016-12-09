@@ -56,11 +56,11 @@
 #include <linux/scatterlist.h>
 
 struct __kfifo {
-	unsigned int	in;
-	unsigned int	out;
-	unsigned int	mask;
-	unsigned int	esize;
-	void		*data;
+	unsigned int	in;/*<llj>data is added at offset (in % size) </llj>*/ 
+	unsigned int	out;/*<llj>data is extracted from off. (out % size)</llj>*/
+	unsigned int	mask;/*size of kfifo*/
+	unsigned int	esize;/*<llj>element size</llj>*/
+	void		*data;/*<llj>the buffer holding the data</llj>*/
 };
 
 #define __STRUCT_KFIFO_COMMON(datatype, recsize, ptrtype) \
@@ -81,6 +81,7 @@ struct __kfifo {
 #define STRUCT_KFIFO(type, size) \
 	struct __STRUCT_KFIFO(type, size, 0, type)
 
+/*<llj>recsize:record size</llj>*/
 #define __STRUCT_KFIFO_PTR(type, recsize, ptrtype) \
 { \
 	__STRUCT_KFIFO_COMMON(type, recsize, ptrtype); \

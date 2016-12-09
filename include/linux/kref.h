@@ -20,6 +20,11 @@
 #include <linux/kernel.h>
 #include <linux/mutex.h>
 
+/**
+ *<llj>
+ *allow you to add reference counters to your objects
+ *</llj>
+ */
 struct kref {
 	atomic_t refcount;
 };

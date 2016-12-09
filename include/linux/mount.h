@@ -47,6 +47,11 @@ struct mnt_namespace;
 
 #define MNT_INTERNAL	0x4000
 
+/**
+ *<llj>
+ *每一个被装载的系统都对应着一个vfsmount的实例
+ *</llj>
+ */
 struct vfsmount {
 	struct dentry *mnt_root;	/* root of the mounted tree */
 	struct super_block *mnt_sb;	/* pointer to superblock */
