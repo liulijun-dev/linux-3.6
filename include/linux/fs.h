@@ -1512,21 +1512,21 @@ struct sb_writers {
 struct super_block {
 	struct list_head	s_list;		/* Keep this first */
 	dev_t			s_dev;		/* search index; _not_ kdev_t */
-	unsigned char		s_blocksize_bits;
-	unsigned long		s_blocksize;
+	unsigned char		s_blocksize_bits;/*<llj>块大小的位数</llj>*/
+	unsigned long		s_blocksize;/*<llj>文件系统的块大小</llj>*/
 	loff_t			s_maxbytes;	/* Max file size */
 	struct file_system_type	*s_type;
 	const struct super_operations	*s_op;
 	const struct dquot_operations	*dq_op;
 	const struct quotactl_ops	*s_qcop;
 	const struct export_operations *s_export_op;
-	unsigned long		s_flags;
-	unsigned long		s_magic;
-	struct dentry		*s_root;
-	struct rw_semaphore	s_umount;
+	unsigned long		s_flags;/*<llj>超级块的状态位</llj>*/
+	unsigned long		s_magic;/*<llj>魔术数标记</llj>*/
+	struct dentry		*s_root;/*<llj>指向根目录的dentry结构</llj>*/
+	struct rw_semaphore	s_umount;/*<llj>文件系统卸载时用到的读写信号量</llj>*/
 	struct mutex		s_lock;
-	int			s_count;
-	atomic_t		s_active;
+	int			s_count;/*<llj>引用记数</llj>*/
+	atomic_t		s_active;/*<llj>原子文件系统引用记数</llj>*/
 #ifdef CONFIG_SECURITY
 	void                    *s_security;
 #endif
@@ -1549,9 +1549,9 @@ struct super_block {
 	struct list_head	s_inode_lru;		/* unused inode lru */
 	int			s_nr_inodes_unused;	/* # of inodes on lru */
 
-	struct block_device	*s_bdev;
+	struct block_device	*s_bdev;/*<llj>文件系统的块设备信息</llj>*/
 	struct backing_dev_info *s_bdi;
-	struct mtd_info		*s_mtd;
+	struct mtd_info		*s_mtd;/*<llj>类内存设备</llj>*/
 	struct hlist_node	s_instances;
 	struct quota_info	s_dquot;	/* Diskquota specific options */
 
@@ -2035,10 +2035,10 @@ struct file_system_type {
 	int fs_flags;
 	struct dentry *(*mount) (struct file_system_type *, int,
 		       const char *, void *);
-	void (*kill_sb) (struct super_block *);
+	void (*kill_sb) (struct super_block *);/*<llj>删除一个超级块对象</llj>*/
 	struct module *owner;/*<llj>指向module的指针，仅当文件系统类型是以模块方式注册时，owner才有效</llj>*/
 	struct file_system_type * next;/*<llj>单向链表</llj>*/
-	struct hlist_head fs_supers;/*<llj>双向链表</llj>*/
+	struct hlist_head fs_supers;/*<llj>表示给定文件系统所对应的超级块链表的头结点</llj>*/
 
 	struct lock_class_key s_lock_key;
 	struct lock_class_key s_umount_key;

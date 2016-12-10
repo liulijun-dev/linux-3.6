@@ -263,7 +263,7 @@ static struct file_system_type ramfs_fs_type = {
 };
 static struct file_system_type rootfs_fs_type = {
 	.name		= "rootfs",
-	.mount		= rootfs_mount,
+	.mount		= rootfs_mount,/*<llj>used to mount fs</llj>*/
 	.kill_sb	= kill_litter_super,
 };
 

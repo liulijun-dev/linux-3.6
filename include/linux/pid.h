@@ -5,8 +5,12 @@
 
 enum pid_type
 {
-	PIDTYPE_PID,
+	PIDTYPE_PID,/*<llj>进程描述符</llj>*/
+	/*<llj>一组进程描述符。一组进程(process)可以组成一个群组，
+	 *并且有一个组描述符。 这样的好处是如果有一个信号是针对这
+	 *个组描述符，该群组内的所有进程都可以接受到</llj>*/
 	PIDTYPE_PGID,
+	/*<llj>对组描述符再做一个群组，形成一个session，这是更高一个层次的抽象</llj>*/
 	PIDTYPE_SID,
 	PIDTYPE_MAX
 };
@@ -56,8 +60,8 @@ struct upid {
 
 struct pid
 {
-	atomic_t count;
-	unsigned int level;
+	atomic_t count;/*<llj>引用记数</llj>*/
+	unsigned int level;/*<llj>该pid在pid_namespace的第几层，当level=0表示是global_namespace</llj>*/
 	/* lists of tasks that use this pid */
 	struct hlist_head tasks[PIDTYPE_MAX];
 	struct rcu_head rcu;

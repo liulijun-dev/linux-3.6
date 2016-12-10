@@ -9,8 +9,8 @@
 #include <linux/kref.h>
 
 struct pidmap {
-       atomic_t nr_free;
-       void *page;
+       atomic_t nr_free;/*<llj>还能分配的pid数量</llj>*/
+       void *page;/*<llj>指向存放pid的物理页</llj>*/
 };
 
 #define PIDMAP_ENTRIES         ((PID_MAX_LIMIT + 8*PAGE_SIZE - 1)/PAGE_SIZE/8)
@@ -19,11 +19,19 @@ struct bsd_acct_struct;
 
 struct pid_namespace {
 	struct kref kref;
+	/*<llj>分配pid的位图。当需要分配一个新的pid时只需查找位图，
+	 *找到bit为0的位置并置1，然后更新统计数据域（nr_free)，表示
+	 *该pid_namespace下pid已分配的情况</llj>*/
 	struct pidmap pidmap[PIDMAP_ENTRIES];
-	int last_pid;
+	int last_pid;/*<llj>用于pidmap的分配，指向最后一个分配的pid的位置</llj>*/
+	/*<llj>指向的是一个进程。 该进程的作用是当子进程结束时为其收尸（回收空间）。
+	*由于目前只支持global namespace，这里child_reaper就指向init_task</llj>*/
 	struct task_struct *child_reaper;
+	/*<llj>指向分配pid的slab的地址</llj>*/
 	struct kmem_cache *pid_cachep;
+	/*<llj>该namespace处于哪一层， 现在这里显然是0</llj>*/
 	unsigned int level;
+	/*<llj>该namespace的父亲namespace。 现在一定是NULL</llj>*/
 	struct pid_namespace *parent;
 #ifdef CONFIG_PROC_FS
 	struct vfsmount *proc_mnt;

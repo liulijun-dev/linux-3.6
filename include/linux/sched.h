@@ -1327,7 +1327,13 @@ struct task_struct {
 	unsigned sched_reset_on_fork:1;
 	unsigned sched_contributes_to_load:1;
 
-	pid_t pid;
+	pid_t pid;/*<llj>该进程的进程描述符</llj>*/
+	/*<llj>该进程的线程描述符。在linux内核中对线程并没有做特殊的处理，
+	 *还是由task_struct来管理。所以从内核的角度看，用户态的线程本质上
+	 *还是一个进程。对于同一个进程（用户态角度）中不同的线程其tgid是相
+	 *同的，但是pid各不相同。主线程即group_leader（主线程会创建其他所有
+	 *的子线程）。如果是单线程进程（用户态角度），它的pid等于tgid。对于
+	 *用户态程序来说，调用getpid（）函数其实返回的是tgid</llj>*/
 	pid_t tgid;
 
 #ifdef CONFIG_CC_STACKPROTECTOR
@@ -1346,6 +1352,8 @@ struct task_struct {
 	 */
 	struct list_head children;	/* list of my children */
 	struct list_head sibling;	/* linkage in my parent's children list */
+	/*<llj>除了在多线程的模式下指向主线程，还有一个用处， 当一些进程组
+	 *成一个群组时（PIDTYPE_PGID)， 该域指向该群组的leader</llj>*/
 	struct task_struct *group_leader;	/* threadgroup leader */
 
 	/*
