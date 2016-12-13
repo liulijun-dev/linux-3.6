@@ -59,12 +59,13 @@ enum kobject_action {
 
 struct kobject {
 	const char		*name;
+	/*<llj>用于父kset以链表头结构将kobject结构维护成双向链表</llj>*/
 	struct list_head	entry;
-	struct kobject		*parent;
+	struct kobject		*parent;/*<llj>指向父结点指针</llj>*/
 	struct kset		*kset;
 	struct kobj_type	*ktype;
 	struct sysfs_dirent	*sd;
-	struct kref		kref;
+	struct kref		kref; /*<llj>用于引用计数</llj>*/
 	unsigned int state_initialized:1;
 	unsigned int state_in_sysfs:1;
 	unsigned int state_add_uevent_sent:1;
@@ -156,7 +157,15 @@ struct sock;
  * can add new environment variables, or filter out the uevents if so
  * desired.
  */
+/**
+ *<llj>
+ *它用来对同类型对象提供一个包装集合，在内核数据结构上它也是由内嵌一个kboject 
+ *实现，因而它同时也是一个 kobject (面向对象 OOP 概念中的继承关系)，具有 
+ *kobject 的全部功能
+ *</llj>
+ */
 struct kset {
+          /*<llj>将集合中的 kobject 按 struct list_head entry 维护成双向链表</llj>*/
 	struct list_head list;
 	spinlock_t list_lock;
 	struct kobject kobj;

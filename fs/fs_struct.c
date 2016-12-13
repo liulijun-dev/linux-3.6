@@ -18,7 +18,7 @@ void set_fs_root(struct fs_struct *fs, struct path *path)
 	spin_lock(&fs->lock);
 	write_seqcount_begin(&fs->seq);
 	old_root = fs->root;
-	fs->root = *path;
+	fs->root = *path; /*<llj>set root</llj>*/
 	write_seqcount_end(&fs->seq);
 	spin_unlock(&fs->lock);
 	if (old_root.dentry)
@@ -37,7 +37,7 @@ void set_fs_pwd(struct fs_struct *fs, struct path *path)
 	spin_lock(&fs->lock);
 	write_seqcount_begin(&fs->seq);
 	old_pwd = fs->pwd;
-	fs->pwd = *path;
+	fs->pwd = *path;/*<llj>set pwd</llj>*/
 	write_seqcount_end(&fs->seq);
 	spin_unlock(&fs->lock);
 

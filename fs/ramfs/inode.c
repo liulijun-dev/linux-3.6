@@ -64,6 +64,7 @@ struct inode *ramfs_get_inode(struct super_block *sb,
 		mapping_set_gfp_mask(inode->i_mapping, GFP_HIGHUSER);
 		mapping_set_unevictable(inode->i_mapping);
 		inode->i_atime = inode->i_mtime = inode->i_ctime = CURRENT_TIME;
+		/*<llj>mode=040755 mode&S_IFMT=S_IFDIR</llj>*/
 		switch (mode & S_IFMT) {
 		default:
 			init_special_inode(inode, mode, dev);
