@@ -77,7 +77,7 @@ static inline void mapping_set_gfp_mask(struct address_space *m, gfp_t mask)
  * Or rather, it _will_ be done in larger chunks.
  */
 #define PAGE_CACHE_SHIFT	PAGE_SHIFT
-#define PAGE_CACHE_SIZE		PAGE_SIZE
+#define PAGE_CACHE_SIZE		PAGE_SIZE /*<llj>4k</llj>*/
 #define PAGE_CACHE_MASK		PAGE_MASK
 #define PAGE_CACHE_ALIGN(addr)	(((addr)+PAGE_CACHE_SIZE-1)&PAGE_CACHE_MASK)
 

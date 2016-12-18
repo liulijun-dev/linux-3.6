@@ -71,10 +71,10 @@ struct sysfs_dirent {
 	const void		*s_ns; /* namespace tag */
 	unsigned int		s_hash; /* ns + name hash */
 	union {
-		struct sysfs_elem_dir		s_dir;
-		struct sysfs_elem_symlink	s_symlink;
-		struct sysfs_elem_attr		s_attr;
-		struct sysfs_elem_bin_attr	s_bin_attr;
+		struct sysfs_elem_dir		s_dir;/*<llj>目录</llj>*/
+		struct sysfs_elem_symlink	s_symlink;/*<llj>符号连接文件</llj>*/
+		struct sysfs_elem_attr		s_attr;/*<llj>属性文件</llj>*/
+		struct sysfs_elem_bin_attr	s_bin_attr;/*<llj>二进制属性文件</llj>*/
 	};
 
 	unsigned short		s_flags;

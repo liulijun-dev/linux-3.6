@@ -815,7 +815,7 @@ struct inode {
 		const unsigned int i_nlink;
 		unsigned int __i_nlink;
 	};
-	dev_t			i_rdev;
+	dev_t			i_rdev;/*<llj>For inodes that represent device files, this field contains the actual device number.</llj>*/
 	loff_t			i_size;
 	struct timespec		i_atime;
 	struct timespec		i_mtime;
@@ -1031,7 +1031,7 @@ static inline int ra_has_index(struct file_ra_state *ra, pgoff_t index)
 
 /**
  *<llj>
- *代表被打开的文件
+ *代表被打开的文件，只有open操作才会创建该结构体，copy仅仅增加f_count
  *</llj>
  */
 struct file {
@@ -1056,7 +1056,7 @@ struct file {
 #ifdef CONFIG_SMP
 	int			f_sb_list_cpu;
 #endif
-	atomic_long_t		f_count;
+	atomic_long_t		f_count;/*<llj>计数，为0时调用file_operation中的release方法</llj>*/
 	unsigned int 		f_flags;
 	fmode_t			f_mode;
 	loff_t			f_pos;
@@ -1800,8 +1800,11 @@ struct file_operations {
 	loff_t (*llseek) (struct file *, loff_t, int);
 	ssize_t (*read) (struct file *, char __user *, size_t, loff_t *);
 	ssize_t (*write) (struct file *, const char __user *, size_t, loff_t *);
+	/*<llj>aio-asynchronous io</llj>*/
 	ssize_t (*aio_read) (struct kiocb *, const struct iovec *, unsigned long, loff_t);
 	ssize_t (*aio_write) (struct kiocb *, const struct iovec *, unsigned long, loff_t);
+	/*<llj>This field should be NULL for device files; it is used for reading 
+	 *directories and is useful only for filesystems.</llj>*/
 	int (*readdir) (struct file *, void *, filldir_t);
 	unsigned int (*poll) (struct file *, struct poll_table_struct *);
 	long (*unlocked_ioctl) (struct file *, unsigned int, unsigned long);

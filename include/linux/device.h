@@ -479,6 +479,7 @@ struct device_attribute {
 	struct attribute	attr;
 	ssize_t (*show)(struct device *dev, struct device_attribute *attr,
 			char *buf);
+	/*<llj>写入的buffer及其大小，其中buffer已经转换到了内核空间</llj>*/
 	ssize_t (*store)(struct device *dev, struct device_attribute *attr,
 			 const char *buf, size_t count);
 };
@@ -496,7 +497,7 @@ ssize_t device_show_int(struct device *dev, struct device_attribute *attr,
 			char *buf);
 ssize_t device_store_int(struct device *dev, struct device_attribute *attr,
 			 const char *buf, size_t count);
-
+/*<llj>名称，权限位，读函数，写函数</llj>*/
 #define DEVICE_ATTR(_name, _mode, _show, _store) \
 	struct device_attribute dev_attr_##_name = __ATTR(_name, _mode, _show, _store)
 #define DEVICE_ULONG_ATTR(_name, _mode, _var) \
