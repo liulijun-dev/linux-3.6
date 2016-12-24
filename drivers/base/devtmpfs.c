@@ -35,6 +35,11 @@ static int mount_dev;
 
 static DEFINE_SPINLOCK(req_lock);
 
+/**
+ *<llj>
+ *请求创建设备节点的请求队列req结构
+  *</llj>
+  */
 static struct req {
 	struct req *next;
 	struct completion done;
@@ -192,7 +197,7 @@ static int handle_create(const char *nodename, umode_t mode, struct device *dev)
 	struct dentry *dentry;
 	struct path path;
 	int err;
-
+           /*<llj>查找节点名称的路径以及返回节点对应的父目录dentry结构，即在此目录下创建一个设备节点，即是/dev目录对应的dentry结构</llj>*/
 	dentry = kern_path_create(AT_FDCWD, nodename, &path, 0);
 	if (dentry == ERR_PTR(-ENOENT)) {
 		create_path(nodename);
@@ -372,9 +377,16 @@ static int devtmpfsd(void *p)
 	*err = sys_unshare(CLONE_NEWNS);
 	if (*err)
 		goto out;
+	/**
+	 *<llj>
+	 *挂载devtmpfs文件系统
+	 *devtmpfs是待安装设备的路径名，“/”是安装点路径名，”devtmpfs“表示文件系统类型
+	 *</llj>
+	 */
 	*err = sys_mount("devtmpfs", "/", "devtmpfs", MS_SILENT, options);
 	if (*err)
 		goto out;
+	/*<llj>将进程的当前工作目录(pwd)设定为devtmpfs文件系统的根目录</llj>*/
 	sys_chdir("/.."); /* will traverse into overmounted root */
 	sys_chroot(".");
 	complete(&setup_done);
