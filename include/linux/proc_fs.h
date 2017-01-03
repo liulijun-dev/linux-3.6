@@ -207,6 +207,13 @@ static inline struct proc_dir_entry *proc_mkdir(const char *name,
 static inline struct proc_dir_entry *proc_mkdir_mode(const char *name,
 	umode_t mode, struct proc_dir_entry *parent) { return NULL; }
 
+/**
+ *<llj>
+ *name - the name of the file to create
+ *mode - protection mask for the file
+ *base - the directory in which the file should be created
+ *</llj>
+ */
 static inline struct proc_dir_entry *create_proc_read_entry(const char *name,
 	umode_t mode, struct proc_dir_entry *base, 
 	read_proc_t *read_proc, void * data) { return NULL; }

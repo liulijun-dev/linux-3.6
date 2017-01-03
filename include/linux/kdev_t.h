@@ -8,9 +8,11 @@
 #define MINOR(dev)	((unsigned int) ((dev) & MINORMASK))
 #define MKDEV(ma,mi)	(((ma) << MINORBITS) | (mi))
 
+/*<llj>encode the device number into the given buffer,returns the number of characters printed</llj>*/
 #define print_dev_t(buffer, dev)					\
 	sprintf((buffer), "%u:%u\n", MAJOR(dev), MINOR(dev))
 
+/*<llj>encode the device number into the given buffer,return buffer</llj>*/
 #define format_dev_t(buffer, dev)					\
 	({								\
 		sprintf(buffer, "%u:%u", MAJOR(dev), MINOR(dev));	\
