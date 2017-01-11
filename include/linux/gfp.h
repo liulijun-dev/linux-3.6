@@ -48,6 +48,7 @@ struct vm_area_struct;
  * without the underscores and use them consistently. The definitions here may
  * be used in bit comparisons.
  */
+/*<llj>This flag requests allocation to happen in the DMA-capable memory zone.</llj>*/
 #define __GFP_DMA	((__force gfp_t)___GFP_DMA)
 #define __GFP_HIGHMEM	((__force gfp_t)___GFP_HIGHMEM)
 #define __GFP_DMA32	((__force gfp_t)___GFP_DMA32)
@@ -69,13 +70,18 @@ struct vm_area_struct;
  * mechanism or reclaimed
  */
 #define __GFP_WAIT	((__force gfp_t)___GFP_WAIT)	/* Can wait and reschedule? */
+/*<llj>This flag marks a high-priority request, which is allowed to consume even the
+last pages of memory set aside by the kernel for emergencies</llj>*/
 #define __GFP_HIGH	((__force gfp_t)___GFP_HIGH)	/* Should access emergency pools? */
 #define __GFP_IO	((__force gfp_t)___GFP_IO)	/* Can start physical IO? */
 #define __GFP_FS	((__force gfp_t)___GFP_FS)	/* Can call down to low-level FS? */
 #define __GFP_COLD	((__force gfp_t)___GFP_COLD)	/* Cache-cold page required */
 #define __GFP_NOWARN	((__force gfp_t)___GFP_NOWARN)	/* Suppress page allocation failure warning */
+/*<llj>repeating the attempt,but the allocation can still fail.</llj>*/
 #define __GFP_REPEAT	((__force gfp_t)___GFP_REPEAT)	/* See above */
+/*<llj>tells the allocator never to fail; it works as hard as needed to satisfy the request</llj>*/
 #define __GFP_NOFAIL	((__force gfp_t)___GFP_NOFAIL)	/* See above */
+/*</llj>tells the allocator never to fail; it works as hard as needed to satisfy the request</llj>*/
 #define __GFP_NORETRY	((__force gfp_t)___GFP_NORETRY) /* See above */
 #define __GFP_MEMALLOC	((__force gfp_t)___GFP_MEMALLOC)/* Allow access to emergency reserves */
 #define __GFP_COMP	((__force gfp_t)___GFP_COMP)	/* Add compound page metadata */
@@ -104,15 +110,20 @@ struct vm_area_struct;
 #define __GFP_BITS_MASK ((__force gfp_t)((1 << __GFP_BITS_SHIFT) - 1))
 
 /* This equals 0, but use constants in case they ever change */
+/*<llj>Used to allocate memory from interrupt handlers and other code outside of a
+process context. Never sleeps.</llj>*/
 #define GFP_NOWAIT	(GFP_ATOMIC & ~__GFP_HIGH)
 /* GFP_ATOMIC means both !wait (__GFP_WAIT not set) and use emergency pool */
 #define GFP_ATOMIC	(__GFP_HIGH)
 #define GFP_NOIO	(__GFP_WAIT)
 #define GFP_NOFS	(__GFP_WAIT | __GFP_IO)
+/*<llj>Normal allocation of kernel memory. May sleep.</llj>*/
 #define GFP_KERNEL	(__GFP_WAIT | __GFP_IO | __GFP_FS)
 #define GFP_TEMPORARY	(__GFP_WAIT | __GFP_IO | __GFP_FS | \
 			 __GFP_RECLAIMABLE)
+/*<llj>Used to allocate memory for user-space pages; it may sleep.</llj>*/
 #define GFP_USER	(__GFP_WAIT | __GFP_IO | __GFP_FS | __GFP_HARDWALL)
+/*<llj>Like GFP_USER, but allocates from high memory, if any.</llj>*/
 #define GFP_HIGHUSER	(__GFP_WAIT | __GFP_IO | __GFP_FS | __GFP_HARDWALL | \
 			 __GFP_HIGHMEM)
 #define GFP_HIGHUSER_MOVABLE	(__GFP_WAIT | __GFP_IO | __GFP_FS | \
