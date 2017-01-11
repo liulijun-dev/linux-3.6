@@ -9,6 +9,11 @@ struct vfsmount;
 
 enum { MAX_NESTED_LINKS = 8 };
 
+/**
+ *<llj>
+ *在路径搜索的过程中用来记录相关信息，起着类似"路标"的作用
+ *</llj>
+ */
 struct nameidata {
 	struct path	path;
 	struct qstr	last;

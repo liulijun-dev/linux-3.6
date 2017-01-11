@@ -14,6 +14,7 @@ struct path;
 struct inode;
 struct dentry;
 
+/*<llj>iterator</llj>*/
 struct seq_file {
 	char *buf;
 	size_t size;
