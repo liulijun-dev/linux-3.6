@@ -3760,7 +3760,7 @@ do_wait_for_common(struct completion *x, long timeout, int state)
 		if (!x->done)
 			return timeout;
 	}
-	x->done--;
+	x->done--;/*<llj>使得该complete的状态又为undone，下次可以接着使用该complete</llj>*/
 	return timeout ?: 1;
 }
 

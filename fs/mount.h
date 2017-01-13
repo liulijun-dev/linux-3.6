@@ -18,7 +18,7 @@ struct mnt_pcp {
 struct mount {
 	struct list_head mnt_hash;
 	struct mount *mnt_parent;
-	struct dentry *mnt_mountpoint;
+	struct dentry *mnt_mountpoint;/*<llj>always mnt->mnt.mnt_root;</llj>*/
 	struct vfsmount mnt;
 #ifdef CONFIG_SMP
 	struct mnt_pcp __percpu *mnt_pcp;

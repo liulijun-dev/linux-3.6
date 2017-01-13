@@ -62,9 +62,9 @@ struct kobject {
 	/*<llj>用于父kset以链表头结构将kobject结构维护成双向链表</llj>*/
 	struct list_head	entry;
 	struct kobject		*parent;/*<llj>指向父结点指针</llj>*/
-	struct kset		*kset;
+	struct kset		*kset;  /*<llj>this kobject will be added to this kset->list</llj>*/
 	struct kobj_type	*ktype;
-	struct sysfs_dirent	*sd;
+	struct sysfs_dirent	*sd; /*<llj>kobject对应的sysfs文件，将在sys下显示出来</llj>*/
 	struct kref		kref; /*<llj>用于引用计数</llj>*/
 	unsigned int state_initialized:1;
 	unsigned int state_in_sysfs:1;

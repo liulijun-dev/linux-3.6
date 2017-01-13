@@ -776,7 +776,7 @@ struct posix_acl;
 
 /*
  *<llj>
- *对应着磁盘上的文件
+ *对应着磁盘上的文件,look inode_init_always() in inode.c
  *</llj>
  * Keep mostly read-only and often accessed (especially for
  * the RCU path lookup and 'stat' data) fields at the beginning
@@ -822,7 +822,7 @@ struct inode {
 	struct timespec		i_ctime;
 	spinlock_t		i_lock;	/* i_blocks, i_bytes, maybe i_size */
 	unsigned short          i_bytes;
-	unsigned int		i_blkbits;
+	unsigned int		i_blkbits; /*<llj>equal to sb->s_blocksize_bits</llj>*/
 	blkcnt_t		i_blocks;
 
 #ifdef __NEED_I_SIZE_ORDERED
@@ -839,7 +839,7 @@ struct inode {
      *<llj>
      *系统中所有的inode都存放在hash_table，以方便对某个inode的快速查找，
      *hash算法是通过超级块和inode number计算的，这两项组合可以唯一确定
-     *一个inode
+     *一个inode,hash算法位于inode.c(hash)
      *</llj>
      */
 	struct hlist_node	i_hash;
@@ -1510,7 +1510,7 @@ struct sb_writers {
  </llj>
  */
 struct super_block {
-	struct list_head	s_list;		/* Keep this first */
+	struct list_head	s_list;		/* Keep this first <llj>add to super_blocks</llj>*/
 	dev_t			s_dev;		/* search index; _not_ kdev_t */
 	unsigned char		s_blocksize_bits;/*<llj>块大小的位数</llj>*/
 	unsigned long		s_blocksize;/*<llj>文件系统的块大小</llj>*/
@@ -1557,7 +1557,7 @@ struct super_block {
 
 	struct sb_writers	s_writers;
 
-	char s_id[32];				/* Informational name */
+	char s_id[32];				/* Informational name <llj>file system name</llj>*/
 	u8 s_uuid[16];				/* UUID */
 
 	void 			*s_fs_info;	/* Filesystem private info */
@@ -1839,7 +1839,7 @@ struct inode_operations {
 
 	int (*create) (struct inode *,struct dentry *, umode_t, bool);
 	int (*link) (struct dentry *,struct inode *,struct dentry *);
-	int (*unlink) (struct inode *,struct dentry *);
+	int (*unlink) (struct inode *,strucot dentry *);
 	int (*symlink) (struct inode *,struct dentry *,const char *);
 	int (*mkdir) (struct inode *,struct dentry *,umode_t);
 	int (*rmdir) (struct inode *,struct dentry *);

@@ -756,17 +756,6 @@ vfs_kern_mount(struct file_system_type *type, int flags, const char *name, void 
 	if (flags & MS_KERNMOUNT)
 		mnt->mnt.mnt_flags = MNT_INTERNAL;
 
-          /*
-     *<llj>
-     *{d_flags = 0, d_seq = {sequence = 2}, d_hash = {next = 0x0, pprev = 0x0}, d_parent = 0xc7402080, d_name = {{{
-     *  hash = 0, len = 1}, hash_len = 4294967296}, name = 0xc74020a4 "/"}, d_inode = 0xc7401150, 
-     *  d_iname = "/", '\000' <repeats 34 times>, d_count = 2, d_lock = {{rlock = {raw_lock = {{head_tail = 771, tickets = {
-     *        head = 3 '\003', tail = 3 '\003'}}}}}}, d_op = 0x0, d_sb = 0xc781a400, d_time = 0, d_fsdata = 0x0, 
-     * d_lru = {next = 0xc74020e0, prev = 0xc74020e0}, d_u = {d_child = {next = 0xc74020e8, prev = 0xc74020e8}, d_rcu = {
-     * next = 0xc74020e8, func = 0xc74020e8}}, d_subdirs = {next = 0xc74020f0, prev = 0xc74020f0}, d_alias = {
-     * next = 0x0, pprev = 0xc74011f4}}
-     *</llj>
-     */
 	root = mount_fs(type, flags, name, data);
 	if (IS_ERR(root)) {
 		free_vfsmnt(mnt);
@@ -777,67 +766,7 @@ vfs_kern_mount(struct file_system_type *type, int flags, const char *name, void 
 	mnt->mnt.mnt_sb = root->d_sb;
 	mnt->mnt_mountpoint = mnt->mnt.mnt_root;
 	mnt->mnt_parent = mnt;
-	/*<llj>
-	 *{
-		  mnt_hash = {
-		    next = 0xc78180a0, 
-		    prev = 0xc78180a0
-		  }, 
-		  mnt_parent = 0xc78180a0, 
-		  mnt_mountpoint = 0xc7402080, 
-		  mnt = {
-		    mnt_root = 0xc7402080, 
-		    mnt_sb = 0xc781a400, 
-		    mnt_flags = 0
-		  }, 
-		  mnt_pcp = 0xc1947c08, 
-		  mnt_mounts = {
-		    next = 0xc78180c0, 
-		    prev = 0xc78180c0
-		  }, 
-		  mnt_child = {
-		    next = 0xc78180c8, 
-		    prev = 0xc78180c8
-		  }, 
-		  mnt_instance = {
-		    next = 0x0, 
-		    prev = 0x0
-		  }, 
-		  mnt_devname = 0xc780d088 "rootfs", 
-		  mnt_list = {
-		    next = 0xc78180dc, 
-		    prev = 0xc78180dc
-		  }, 
-		  mnt_expire = {
-		    next = 0xc78180e4, 
-		    prev = 0xc78180e4
-		  }, 
-		  mnt_share = {
-		    next = 0xc78180ec, 
-		    prev = 0xc78180ec
-		  }, 
-		  mnt_slave_list = {
-		    next = 0xc78180f4, 
-		    prev = 0xc78180f4
-		  }, 
-		  mnt_slave = {
-		    next = 0xc78180fc, 
-		    prev = 0xc78180fc
-		  }, 
-		  mnt_master = 0x0, 
-		  mnt_ns = 0x0, 
-		  mnt_fsnotify_marks = {
-		    first = 0x0
-		  }, 
-		  mnt_fsnotify_mask = 0, 
-		  mnt_id = 1, 
-		  mnt_group_id = 0, 
-		  mnt_expiry_mark = 0, 
-		  mnt_pinned = 0, 
-		  mnt_ghosts = 0
-		}
-	 *</llj>
-	 */
+	
 	br_write_lock(&vfsmount_lock);
 	/*<llj>该superblock已经挂载了rootfs</llj>*/
 	list_add_tail(&mnt->mnt_instance, &root->d_sb->s_mounts);
@@ -1937,40 +1866,11 @@ do_kern_mount(const char *fstype, int flags, const char *name, void *data)
 	struct vfsmount *mnt;
 	if (!type)
 		return ERR_PTR(-ENODEV);
-	/*
-	 *<llj>
-	 *{
-     *	  mnt_root = 0xc7402080, 
-	 *	  mnt_sb = 0xc781a400, 
-	 *	  mnt_flags = 0
-	 *  }
-	 *</llj>
-	 */
+
 	mnt = vfs_kern_mount(type, flags, name, data);
 	if (!IS_ERR(mnt) && (type->fs_flags & FS_HAS_SUBTYPE) &&
 	    !mnt->mnt_sb->s_subtype)
 		mnt = fs_set_subtype(mnt, fstype);
-	/*<llj>
-	{
-	  name = 0xc1771bb6 "rootfs", 
-	  fs_flags = 0, 
-	  mount = 0xc12215d0 <rootfs_mount>, 
-	  kill_sb = 0xc114bed0 <kill_litter_super>, 
-	  owner = 0x0, 
-	  next = 0x0, 
-	  fs_supers = {
-		first = 0xc781a4dc
-	  }, 
-	  s_lock_key = {<No data fields>}, 
-	  s_umount_key = {<No data fields>}, 
-	  s_vfs_rename_key = {<No data fields>}, 
-	  s_writers_key = 0xc18497b4, 
-	  i_lock_key = {<No data fields>}, 
-	  i_mutex_key = {<No data fields>}, 
-	  i_mutex_dir_key = {<No data fields>}
-	}
-	*</llj>
-	*/
 	put_filesystem(type);
 	return mnt;
 }
@@ -2731,7 +2631,7 @@ void __init mnt_init(void)
 	if (err)
 		printk(KERN_WARNING "%s: sysfs_init error: %d\n",
 			__func__, err);
-	fs_kobj = kobject_create_and_add("fs", NULL);
+	fs_kobj = kobject_create_and_add("fs", NULL);/*<llj>create fs directory in sysfs</llj>*/
 	if (!fs_kobj)
 		printk(KERN_WARNING "%s: kobj create error\n", __func__);
 	init_rootfs();
