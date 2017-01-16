@@ -17,9 +17,9 @@ struct sysfs_open_dirent;
 
 /* type-specific structures for sysfs_dirent->s_* union members */
 struct sysfs_elem_dir {
-	struct kobject		*kobj;
+	struct kobject		*kobj; /*<llj>对应的kobject</llj>*/
 
-	unsigned long		subdirs;
+	unsigned long		subdirs; /*<llj>子文件夹数量</llj>*/
 	/* children rbtree starts here and goes through sd->s_rb */
 	struct rb_root		children;
 };
@@ -79,7 +79,7 @@ struct sysfs_dirent {
 
 	unsigned short		s_flags;
 	umode_t 		s_mode;
-	unsigned int		s_ino;
+	unsigned int		s_ino; /*<llj>inode number</llj>*/
 	struct sysfs_inode_attrs *s_iattr;
 };
 

@@ -63,6 +63,11 @@ struct bdi_writeback {
 	spinlock_t list_lock;		/* protects the b_* lists */
 };
 
+/**
+ *<llj>
+ * bdi是对块设备层的内存支持,后备设备是非易失性存储器，但是这种存储器都比较慢，所以需要缓存
+ *</llj>
+ */
 struct backing_dev_info {
 	struct list_head bdi_list;
 	unsigned long ra_pages;	/* max readahead<llj>预读</llj> in PAGE_CACHE_SIZE units */

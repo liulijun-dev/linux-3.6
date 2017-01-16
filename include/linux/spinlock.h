@@ -285,6 +285,12 @@ static inline void spin_lock(spinlock_t *lock)
 	raw_spin_lock(&lock->rlock);
 }
 
+/**
+ *<llj>
+ * disables software interrupts
+ *before taking the lock, but leaves hardware interrupts enabled.
+ *</llj>
+ */
 static inline void spin_lock_bh(spinlock_t *lock)
 {
 	raw_spin_lock_bh(&lock->rlock);

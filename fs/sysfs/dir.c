@@ -696,7 +696,7 @@ static int create_dir(struct kobject *kobj, struct sysfs_dirent *parent_sd,
 
 	/* link in */
 	sysfs_addrm_start(&acxt, parent_sd);
-	rc = sysfs_add_one(&acxt, sd);
+	rc = sysfs_add_one(&acxt, sd);/*<llj>将新的目录添加到文件树结构中，文件树为红黑树结构</llj>*/
 	sysfs_addrm_finish(&acxt);
 
 	if (rc == 0)
