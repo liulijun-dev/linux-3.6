@@ -308,6 +308,13 @@ static inline void arch_free_page(struct page *page, int order) { }
 static inline void arch_alloc_page(struct page *page, int order) { }
 #endif
 
+/**
+ *<llj>
+ *nid is the NUMA node ID* whose memory should be allocated, 
+ *flags is the usual GFP_ allocation flags, and
+ *order is the size of the allocation
+ *</llj>
+ */
 struct page *
 __alloc_pages_nodemask(gfp_t gfp_mask, unsigned int order,
 		       struct zonelist *zonelist, nodemask_t *nodemask);
