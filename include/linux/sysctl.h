@@ -1013,13 +1013,15 @@ static inline void *proc_sys_poll_event(struct ctl_table_poll *poll)
 /* A sysctl table is an array of struct ctl_table: */
 struct ctl_table 
 {
-	const char *procname;		/* Text ID for /proc/sys, or zero */
+	const char *procname;		/* Text ID for /proc/sys, or zero <llj>file name in /proc/sys</llj>*/
 	void *data;
-	int maxlen;
-	umode_t mode;
+	int maxlen; /*<llj>输出的内核变量的大小</llj>*/
+	umode_t mode; /*<llj>创建/proc/sys中相关文件或目录的访问权限</llj>*/
 	struct ctl_table *child;	/* Deprecated */
+        /*<llj>当在/proc/sys中读取或写入一个文件时，完成读取或写入操作的函数</llj>*/
 	proc_handler *proc_handler;	/* Callback for text formatting */
 	struct ctl_table_poll *poll;
+        /*<llj>可选参数，通常用于定义变量的最小值和最大值</llj>*/
 	void *extra1;
 	void *extra2;
 };
