@@ -99,6 +99,7 @@ static inline struct page * rb_insert_page_cache(struct inode * inode,
 
 struct rb_node
 {
+        /*<llj>同时存储两种数据，一是其双亲结点的地址，另一是此结点的着色</llj>*/
 	unsigned long  rb_parent_color;
 #define	RB_RED		0
 #define	RB_BLACK	1
@@ -134,7 +135,7 @@ static inline void rb_set_color(struct rb_node *rb, int color)
 
 #define RB_EMPTY_ROOT(root)	((root)->rb_node == NULL)
 #define RB_EMPTY_NODE(node)	(rb_parent(node) == node)
-#define RB_CLEAR_NODE(node)	(rb_set_parent(node, node))
+#define RB_CLEAR_NODE(node)	(rb_set_parent(node, node)) /*<llj>//设置双亲结点为自身 </llj>*/
 
 static inline void rb_init_node(struct rb_node *rb)
 {
