@@ -24,7 +24,7 @@ struct kobj_map {
 		struct module *owner;
 		kobj_probe_t *get;
 		int (*lock)(dev_t, void *);
-		void *data;
+		void *data; /*<llj>pointer to cdev</llj>*/
 	} *probes[255];
 	struct mutex *lock;
 };
@@ -33,7 +33,7 @@ int kobj_map(struct kobj_map *domain, dev_t dev, unsigned long range,
 	     struct module *module, kobj_probe_t *probe,
 	     int (*lock)(dev_t, void *), void *data)
 {
-	unsigned n = MAJOR(dev + range - 1) - MAJOR(dev) + 1;
+	unsigned n = MAJOR(dev + range - 1) - MAJOR(dev) + 1;/*<llj>+1 to avoid n=0</llj>*/
 	unsigned index = MAJOR(dev);
 	unsigned i;
 	struct probe *p;
@@ -57,7 +57,7 @@ int kobj_map(struct kobj_map *domain, dev_t dev, unsigned long range,
 	mutex_lock(domain->lock);
 	for (i = 0, p -= n; i < n; i++, p++, index++) {
 		struct probe **s = &domain->probes[index % 255];
-		while (*s && (*s)->range < range)
+		while (*s && (*s)->range < range)/*<llj>针对一个probe链表，按range递增加入到链表中</llj>*/
 			s = &(*s)->next;
 		p->next = *s;
 		*s = p;

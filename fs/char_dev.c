@@ -45,7 +45,7 @@ struct backing_dev_info directly_mappable_cdev_bdi = {
 		BDI_CAP_NO_ACCT_AND_WRITEBACK),
 };
 
-static struct kobj_map *cdev_map;
+static struct kobj_map *cdev_map;/*<llj>kobj_map()中为其添加元素</llj>*/
 
 static DEFINE_MUTEX(chrdevs_lock);
 
@@ -56,7 +56,7 @@ static struct char_device_struct {
 	int minorct;
 	char name[64];
 	struct cdev *cdev;		/* will die */
-} *chrdevs[CHRDEV_MAJOR_HASH_SIZE];
+} *chrdevs[CHRDEV_MAJOR_HASH_SIZE];/*<llj>pointer array, array link list<llj>*/
 
 /* index in the above */
 static inline int major_to_index(unsigned major)

@@ -27,6 +27,8 @@
  */
 
 #define mb()	asm volatile ("": : :"memory")
+/*<llj>read memory barrier guarantees that any reads appearing before 
+ the barrier are completed prior to the execution of any subsequent read</llj>*/
 #define rmb()	mb()
 #define wmb()	asm volatile ("": : :"memory")
 

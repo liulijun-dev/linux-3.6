@@ -587,9 +587,10 @@ static int proc_register(struct proc_dir_entry * dir, struct proc_dir_entry * dp
 			break;
 		}
 
+           /*<llj>we can traverse dir->subdir by dp->next</llj>*/
 	dp->next = dir->subdir;
 	dp->parent = dir;
-	dir->subdir = dp;
+	dir->subdir = dp;/*<llj>相当于dir->subdir又指向subdir数组的头结点</llj>*/
 	spin_unlock(&proc_subdir_lock);
 
 	return 0;
@@ -607,7 +608,7 @@ static struct proc_dir_entry *__proc_create(struct proc_dir_entry **parent,
 	/* make sure name is valid */
 	if (!name || !strlen(name)) goto out;
 
-	if (xlate_proc_name(name, parent, &fn) != 0)
+	if (xlate_proc_name(name, parent, &fn) != 0)/*<llj>get parent and filename will be created</llj>*/
 		goto out;
 
 	/* At this point there must not be any '/' characters beyond *fn */

@@ -27,6 +27,7 @@
  * object registration that loops through the default attributes of the
  * subsystem and creates attributes files for them in sysfs.
  */
+ /*<llj>populate翻译成填充，将kobject的属性在sysfs中以对应的文件创建出来</llj>*/
 static int populate_dir(struct kobject *kobj)
 {
 	struct kobj_type *t = get_ktype(kobj);
@@ -144,7 +145,7 @@ static void kobject_init_internal(struct kobject *kobj)
 {
 	if (!kobj)
 		return;
-	kref_init(&kobj->kref);
+	kref_init(&kobj->kref);/*<llj>set reference count to one</llj>*/
 	INIT_LIST_HEAD(&kobj->entry);
 	kobj->state_in_sysfs = 0;
 	kobj->state_add_uevent_sent = 0;

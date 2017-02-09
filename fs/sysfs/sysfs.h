@@ -21,7 +21,7 @@ struct sysfs_elem_dir {
 
 	unsigned long		subdirs; /*<llj>子文件夹数量</llj>*/
 	/* children rbtree starts here and goes through sd->s_rb */
-	struct rb_root		children;
+	struct rb_root		children;/*<llj>子目录的红黑树根节点</llj>*/
 };
 
 struct sysfs_elem_symlink {
@@ -59,7 +59,7 @@ struct sysfs_dirent {
 	struct lockdep_map	dep_map;
 #endif
 	struct sysfs_dirent	*s_parent;
-	const char		*s_name;
+	const char		*s_name; /*<llj>和其对应的kobject name相同</llj>*/
 
 	struct rb_node		s_rb;
 
@@ -72,12 +72,12 @@ struct sysfs_dirent {
 	unsigned int		s_hash; /* ns + name hash */
 	union {
 		struct sysfs_elem_dir		s_dir;/*<llj>目录</llj>*/
-		struct sysfs_elem_symlink	s_symlink;/*<llj>符号连接文件</llj>*/
+		struct sysfs_elem_symlink	s_symlink;/*<llj>符号连接文件,实际对应另一个sysfs_dirent</llj>*/
 		struct sysfs_elem_attr		s_attr;/*<llj>属性文件</llj>*/
 		struct sysfs_elem_bin_attr	s_bin_attr;/*<llj>二进制属性文件</llj>*/
 	};
 
-	unsigned short		s_flags;
+	unsigned short		s_flags;/*<llj>is dir or other type file</llj>*/
 	umode_t 		s_mode;
 	unsigned int		s_ino; /*<llj>inode number</llj>*/
 	struct sysfs_inode_attrs *s_iattr;

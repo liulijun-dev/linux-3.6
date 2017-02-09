@@ -66,7 +66,7 @@ struct proc_dir_entry {
 	 */
 	const struct file_operations *proc_fops;
 	struct proc_dir_entry *next, *parent, *subdir;
-	void *data;
+	void *data; /*<llj>// Pointer to private data, for symlink it is the dest name</llj>*/
 	read_proc_t *read_proc;
 	write_proc_t *write_proc;
 	atomic_t count;		/* use count */

@@ -795,7 +795,7 @@ struct inode {
 #endif
 
 	const struct inode_operations	*i_op;
-	struct super_block	*i_sb;
+	struct super_block	*i_sb;/*<llj>which super_block it belones to</llj>*/
 	struct address_space	*i_mapping;
 
 #ifdef CONFIG_SECURITY
@@ -823,7 +823,7 @@ struct inode {
 	spinlock_t		i_lock;	/* i_blocks, i_bytes, maybe i_size */
 	unsigned short          i_bytes;
 	unsigned int		i_blkbits; /*<llj>equal to sb->s_blocksize_bits</llj>*/
-	blkcnt_t		i_blocks;
+	blkcnt_t		i_blocks;/*<llj>the number of block in this inode</llj>*/
 
 #ifdef __NEED_I_SIZE_ORDERED
 	seqcount_t		i_size_seqcount;

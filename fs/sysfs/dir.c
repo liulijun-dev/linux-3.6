@@ -74,7 +74,7 @@ static int sysfs_sd_compare(const struct sysfs_dirent *left,
 }
 
 /**
- *	sysfs_link_subling - link sysfs_dirent into sibling rbtree
+ *	sysfs_link_sibling - link sysfs_dirent into sibling rbtree
  *	@sd: sysfs_dirent of interest
  *
  *	Link @sd into its sibling rbtree which starts from
@@ -109,7 +109,7 @@ static int sysfs_link_sibling(struct sysfs_dirent *sd)
 			return -EEXIST;
 	}
 	/* add new node and rebalance the tree */
-	rb_link_node(&sd->s_rb, parent, node);
+	rb_link_node(&sd->s_rb, parent, node);/*<llj>node节点，即parent的红黑树中包括子目录的rbtree节点</llj>*/
 	rb_insert_color(&sd->s_rb, &sd->s_parent->s_dir.children);
 	return 0;
 }
@@ -468,7 +468,7 @@ int __sysfs_add_one(struct sysfs_addrm_cxt *acxt, struct sysfs_dirent *sd)
 	sd->s_hash = sysfs_name_hash(sd->s_ns, sd->s_name);
 	sd->s_parent = sysfs_get(acxt->parent_sd);
 
-	ret = sysfs_link_sibling(sd);
+	ret = sysfs_link_sibling(sd);/*<llj>add sd to its parent rbtree<llj>*/
 	if (ret)
 		return ret;
 
