@@ -72,12 +72,12 @@ struct sysfs_dirent {
 	unsigned int		s_hash; /* ns + name hash */
 	union {
 		struct sysfs_elem_dir		s_dir;/*<llj>目录</llj>*/
-		struct sysfs_elem_symlink	s_symlink;/*<llj>符号连接文件,实际对应另一个sysfs_dirent</llj>*/
-		struct sysfs_elem_attr		s_attr;/*<llj>属性文件</llj>*/
+		struct sysfs_elem_symlink	s_symlink;/*<llj>符号连接文件,实际对应另一个sysfs_dirent,sysfs内部文件之前的关系就通过该属性维护</llj>*/
+		struct sysfs_elem_attr		s_attr;/*<llj>属性,也是一个sysfs_dirent,对应kobject->ktype->default_attrs,或bin_attribute->attr</llj>*/
 		struct sysfs_elem_bin_attr	s_bin_attr;/*<llj>二进制属性文件</llj>*/
 	};
 
-	unsigned short		s_flags;/*<llj>is dir or other type file</llj>*/
+	unsigned short		s_flags;/*<llj>is dir, attr file or other type file</llj>*/
 	umode_t 		s_mode;
 	unsigned int		s_ino; /*<llj>inode number</llj>*/
 	struct sysfs_inode_attrs *s_iattr;

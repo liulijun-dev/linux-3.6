@@ -371,8 +371,8 @@ inline void raise_softirq_irqoff(unsigned int nr)
 	 * Otherwise we wake up ksoftirqd to make sure we
 	 * schedule the softirq soon.
 	 */
-	if (!in_interrupt())
-		wakeup_softirqd();
+	if (!in_interrupt())/*<llj>如果不处于硬中断或软中断</llj>*/
+		wakeup_softirqd();/*<llj>唤醒ksoftirqd/n进程</llj>*/
 }
 
 void raise_softirq(unsigned int nr)

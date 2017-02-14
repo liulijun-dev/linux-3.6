@@ -92,7 +92,8 @@ struct bus_type {
 	const char		*name;
 	const char		*dev_name;
 	struct device		*dev_root;
-	struct bus_attribute	*bus_attrs;
+	struct bus_attribute	*bus_attrs;/*<llj>default attribute,Í¨³£ÔÚ´´½¨bus_typeÊ±Ö±½Ó¸³Öµ</llj>*/
+           /*<llj>default attributes created for every device added to that bus</llj>*/
 	struct device_attribute	*dev_attrs;
 	struct driver_attribute	*drv_attrs;
 
@@ -109,7 +110,7 @@ struct bus_type {
 
 	struct iommu_ops *iommu_ops;
 
-	struct subsys_private *p;
+	struct subsys_private *p;/*<llj>Ã¿¸ö×ÜÏß¶ÔÓ¦Ò»¸ö×ÓÏµÍ³å</llj>*/
 };
 
 /* This is a #define to keep the compiler from merging different
@@ -633,11 +634,12 @@ struct device_dma_parameters {
  * a higher-level representation of the device.
  */
 struct device {
+          /*<llj>as a general rule, device->kobj->parent is equal to &device->parent->kobj</llj>*/
 	struct device		*parent;
 
 	struct device_private	*p;
 
-	struct kobject kobj;
+	struct kobject kobj;/*<llj>represents this device and links it into the hierarchy.</llj>*/
 	const char		*init_name; /* initial name of the device */
 	const struct device_type *type;
 
@@ -647,7 +649,7 @@ struct device {
 
 	struct bus_type	*bus;		/* type of bus device is on */
 	struct device_driver *driver;	/* which driver has allocated this
-					   device */
+					   device,<llj>it means that this driver manages this device</llj> */
 	void		*platform_data;	/* Platform specific data, device
 					   core doesn't touch it */
 	struct dev_pm_info	power;

@@ -575,6 +575,7 @@ static struct attribute_group pm_qos_attr_group = {
 	.attrs	= pm_qos_attrs,
 };
 
+/*<llj>dpm: power manger directory</llj>*/
 int dpm_sysfs_add(struct device *dev)
 {
 	int rc;

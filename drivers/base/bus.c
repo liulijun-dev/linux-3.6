@@ -920,6 +920,7 @@ static BUS_ATTR(uevent, S_IWUSR, NULL, bus_uevent_store);
  * infrastructure, then register the children subsystems it has:
  * the devices and drivers that belong to the subsystem.
  */
+ /*<llj>主要初始化bus->p，因为这些bus在代码中都是全局变量，因此没有必要将其放在一个全局列表中</llj>*/
 int __bus_register(struct bus_type *bus, struct lock_class_key *key)
 {
 	int retval;
@@ -937,7 +938,7 @@ int __bus_register(struct bus_type *bus, struct lock_class_key *key)
 	retval = kobject_set_name(&priv->subsys.kobj, "%s", bus->name);
 	if (retval)
 		goto out;
-
+	/*<llj>相当于将priv->subsys.kobj加入到bus_kset中，在目录上表现为priv->subsys.kobj为bus_kset的子目录</llj>*/
 	priv->subsys.kobj.kset = bus_kset;
 	priv->subsys.kobj.ktype = &bus_ktype;
 	priv->drivers_autoprobe = 1;

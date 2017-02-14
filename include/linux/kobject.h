@@ -61,6 +61,7 @@ struct kobject {
 	const char		*name;
 	/*<llj>ÓÃÓÚ¸¸ksetÒÔÁ´±íÍ·½á¹¹½«kobject½á¹¹Î¬»¤³ÉË«ÏòÁ´±í</llj>*/
 	struct list_head	entry;
+	/*<llj>parentºÍkset¿ÉÒÔÍ¬Ê±´æÔÚÇÒ²»Ò»ÖÂÂğå</llj>*/
 	struct kobject		*parent;/*<llj>Ö¸Ïò¸¸½áµãÖ¸Õë</llj>*/
 	struct kset		*kset;  /*<llj>this kobject will be added to this kset->list</llj>*/
 	struct kobj_type	*ktype;
@@ -108,7 +109,7 @@ extern char *kobject_get_path(struct kobject *kobj, gfp_t flag);
 
 struct kobj_type {
 	void (*release)(struct kobject *kobj);
-	const struct sysfs_ops *sysfs_ops;
+	const struct sysfs_ops *sysfs_ops;/*<llj>to operate attributes</llj>*/
 	struct attribute **default_attrs;
 	const struct kobj_ns_type_operations *(*child_ns_type)(struct kobject *kobj);
 	const void *(*namespace)(struct kobject *kobj);

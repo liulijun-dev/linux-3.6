@@ -26,7 +26,7 @@
  * driver core should ever touch these fields.
  */
 struct subsys_private {
-	struct kset subsys;
+	struct kset subsys;/*<llj>依据subsys在sysfs中创建目录</llj>*/
 	struct kset *devices_kset;
 	struct list_head interfaces;
 	struct mutex mutex;

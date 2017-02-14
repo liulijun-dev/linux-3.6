@@ -416,15 +416,15 @@ extern bool force_irqthreads;
 
 enum
 {
-	HI_SOFTIRQ=0,
+	HI_SOFTIRQ=0,/*<llj>优先级高的tasklets</llj>*/
 	TIMER_SOFTIRQ,
 	NET_TX_SOFTIRQ,
 	NET_RX_SOFTIRQ,
 	BLOCK_SOFTIRQ,
 	BLOCK_IOPOLL_SOFTIRQ,
-	TASKLET_SOFTIRQ,
+	TASKLET_SOFTIRQ,/*<llj>正常优先级的tasklets</llj>*/
 	SCHED_SOFTIRQ,
-	HRTIMER_SOFTIRQ,
+	HRTIMER_SOFTIRQ,/*<llj>高分辨率定时器</llj>*/
 	RCU_SOFTIRQ,    /* Preferable RCU should always be the last softirq */
 
 	NR_SOFTIRQS

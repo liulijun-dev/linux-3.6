@@ -97,6 +97,11 @@ struct attribute_group {
 struct file;
 struct vm_area_struct;
 
+/**
+ *<llj>
+ *用于用户空间与内核空间交互大块数据
+ *</llj>
+ */
 struct bin_attribute {
 	struct attribute	attr;
 	size_t			size;

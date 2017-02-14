@@ -1037,7 +1037,7 @@ int device_add(struct device *dev)
 	error = dpm_sysfs_add(dev);
 	if (error)
 		goto DPMError;
-	device_pm_add(dev);
+	device_pm_add(dev);/*<llj>Add a device to the PM core's list of active devices</llj>*/
 
 	/* Notify clients of device addition.  This call must come
 	 * after dpm_sysfs_add() and before kobject_uevent().
