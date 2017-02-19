@@ -62,6 +62,14 @@
 # define _IOC_READ	2U
 #endif
 
+/**
+ *<llj>
+ *dir:方向(30-31位)
+ *type:魔数(8-15位)，范围为0-255，通常用A~Z或a~z来表示
+ *nr:基数(0-8位),用于区别各种命令，通常从0开始递增
+ *size:数据大小(16-29位)
+ *</llj>
+ */
 #define _IOC(dir,type,nr,size) \
 	(((dir)  << _IOC_DIRSHIFT) | \
 	 ((type) << _IOC_TYPESHIFT) | \
@@ -81,6 +89,7 @@ extern unsigned int __invalid_size_argument_for_IOC;
 
 /* used to create numbers */
 #define _IO(type,nr)		_IOC(_IOC_NONE,(type),(nr),0)
+/*<llj>size:变量类型</llj>*/
 #define _IOR(type,nr,size)	_IOC(_IOC_READ,(type),(nr),(_IOC_TYPECHECK(size)))
 #define _IOW(type,nr,size)	_IOC(_IOC_WRITE,(type),(nr),(_IOC_TYPECHECK(size)))
 #define _IOWR(type,nr,size)	_IOC(_IOC_READ|_IOC_WRITE,(type),(nr),(_IOC_TYPECHECK(size)))

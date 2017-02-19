@@ -32,8 +32,8 @@ struct subsys_private {
 	struct mutex mutex;
 
 	struct kset *drivers_kset;
-	struct klist klist_devices;
-	struct klist klist_drivers;
+	struct klist klist_devices;/*<llj>挂载的设备</llj>*/
+	struct klist klist_drivers;/*<llj>挂载设备的驱动</llj>*/
 	struct blocking_notifier_head bus_notifier;
 	unsigned int drivers_autoprobe:1;
 	struct bus_type *bus;
@@ -45,7 +45,7 @@ struct subsys_private {
 
 struct driver_private {
 	struct kobject kobj;
-	struct klist klist_devices;
+	struct klist klist_devices;/*<llj>该驱动支持的设备</llj>*/
 	struct klist_node knode_bus;
 	struct module_kobject *mkobj;
 	struct device_driver *driver;

@@ -95,6 +95,7 @@ struct bus_type {
 	struct bus_attribute	*bus_attrs;/*<llj>default attribute,通常在创建bus_type时直接赋值</llj>*/
            /*<llj>default attributes created for every device added to that bus</llj>*/
 	struct device_attribute	*dev_attrs;
+           /*<llj>default attributes created for every driver associated with that bus</llj>*/
 	struct driver_attribute	*drv_attrs;
 
 	int (*match)(struct device *dev, struct device_driver *drv);
