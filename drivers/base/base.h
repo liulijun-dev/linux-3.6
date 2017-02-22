@@ -46,7 +46,7 @@ struct subsys_private {
 struct driver_private {
 	struct kobject kobj;
 	struct klist klist_devices;/*<llj>该驱动支持的设备</llj>*/
-	struct klist_node knode_bus;
+	struct klist_node knode_bus;/*<llj>will be added to bus->p->klist_drivers</llj>*/
 	struct module_kobject *mkobj;
 	struct device_driver *driver;
 };
@@ -74,10 +74,10 @@ struct device_private {
 	struct klist klist_children;
 	struct klist_node knode_parent;
 	struct klist_node knode_driver;
-	struct klist_node knode_bus;
+	struct klist_node knode_bus;/*<llj>will be added to bus->p->klist_devices</llj>*/
 	struct list_head deferred_probe;
 	void *driver_data;
-	struct device *device;
+	struct device *device;/*<llj>device与device_private相互引用</llj>*/
 };
 #define to_device_private_parent(obj)	\
 	container_of(obj, struct device_private, knode_parent)

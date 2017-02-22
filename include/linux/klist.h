@@ -54,8 +54,8 @@ extern int klist_node_attached(struct klist_node *n);
 
 
 struct klist_iter {
-	struct klist		*i_klist;
-	struct klist_node	*i_cur;
+	struct klist		*i_klist; /*<llj>klist_iter_init_node</llj>*/
+	struct klist_node	*i_cur;   /*<llj>node we are iterating</llj>*/
 };
 
 

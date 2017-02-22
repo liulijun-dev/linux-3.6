@@ -1233,7 +1233,8 @@ pci_dev_driver(const struct pci_dev *dev)
 }
 
 /**
- * pci_bus_match - Tell if a PCI device structure has a matching PCI device id structure
+ * pci_bus_match - Tell if a PCI device structure has a matching PCI device id structure 
+ * <llj>according to id_table of pci_driver，也就是驱动支持哪些设备</llj>
  * @dev: the PCI device structure to match against
  * @drv: the device driver to search for matching PCI device id structures
  * 

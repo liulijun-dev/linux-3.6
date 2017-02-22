@@ -134,7 +134,7 @@ EXPORT_SYMBOL_GPL(klist_add_head);
  */
 void klist_add_tail(struct klist_node *n, struct klist *k)
 {
-	klist_node_init(k, n);
+	klist_node_init(k, n);/*<llj>set klist_node n attacted to klist k</llj>*/
 	add_tail(k, n);
 }
 EXPORT_SYMBOL_GPL(klist_add_tail);

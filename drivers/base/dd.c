@@ -269,7 +269,7 @@ static int really_probe(struct device *dev, struct device_driver *drv)
 	WARN_ON(!list_empty(&dev->devres_head));
 
 	dev->driver = drv;
-	if (driver_sysfs_add(dev)) {
+	if (driver_sysfs_add(dev)) {/*<llj>link driver->device, device->driver,construct a relationship</llj>*/
 		printk(KERN_ERR "%s: driver_sysfs_add(%s) failed\n",
 			__func__, dev_name(dev));
 		goto probe_failed;

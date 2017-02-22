@@ -68,7 +68,7 @@ struct kobject {
 	struct sysfs_dirent	*sd; /*<llj>kobject对应的sysfs文件，将在sys下显示出来</llj>*/
 	struct kref		kref; /*<llj>用于引用计数</llj>*/
 	unsigned int state_initialized:1;
-	unsigned int state_in_sysfs:1;/*<llj>是否在sysfs中创建对应的目录</llj>*/
+	unsigned int state_in_sysfs:1;/*<llj>是否在sysfs中创建对应的目录,为1也标记着设备注册成功</llj>*/
 	unsigned int state_add_uevent_sent:1;
 	unsigned int state_remove_uevent_sent:1;
 	unsigned int uevent_suppress:1;

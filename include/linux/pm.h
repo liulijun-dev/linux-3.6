@@ -512,7 +512,7 @@ struct dev_pm_info {
 	bool			ignore_children:1;
 	spinlock_t		lock;
 #ifdef CONFIG_PM_SLEEP
-	struct list_head	entry;
+	struct list_head	entry;/*<llj>will added to global dpm_list</llj>*/
 	struct completion	completion;
 	struct wakeup_source	*wakeup;
 	bool			wakeup_path:1;

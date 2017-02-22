@@ -206,6 +206,9 @@ int kobject_uevent_env(struct kobject *kobj, enum kobject_action action,
 	retval = add_uevent_var(env, "ACTION=%s", action_string);
 	if (retval)
 		goto exit;
+	/*<llj>A directory path,within the sysfs filesystem,that points to the kobject that is
+	 *being either created or destroyed. Note that the mount point of the sysfs filesystem
+	 *is not added to this path,so it is up to the user-space program to determine that.</llj>*/
 	retval = add_uevent_var(env, "DEVPATH=%s", devpath);
 	if (retval)
 		goto exit;
