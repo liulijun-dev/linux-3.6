@@ -689,6 +689,7 @@ struct address_space {
 	 */
 struct request_queue;
 
+/*<llj>描述一个分区或整个磁盘对内核的一个块设备实例 </llj>*/
 struct block_device {
 	dev_t			bd_dev;  /* not a kdev_t - it's a search key */
 	int			bd_openers;

@@ -95,6 +95,7 @@ struct partition_meta_info {
 	u8 volname[PARTITION_META_INFO_VOLNAMELTH];
 };
 
+/*<llj>描述分区应有的分区信息</llj>*/
 struct hd_struct {
 	sector_t start_sect;
 	/*
@@ -102,7 +103,7 @@ struct hd_struct {
 	 * partition while IO is happening to it and update of nr_sects
 	 * can be non-atomic on 32bit machines with 64bit sector_t.
 	 */
-	sector_t nr_sects;
+	sector_t nr_sects;/*<llj>The capacity of this drive, in 512-byte sectors</llj>*/
 	seqcount_t nr_sects_seq;
 	sector_t alignment_offset;
 	unsigned int discard_alignment;
@@ -157,7 +158,12 @@ struct disk_part_tbl {
 };
 
 struct disk_events;
-
+/**
+ *<llj>
+ *this struct is the kernel representation of individual disk device.
+ *And the kernel also uses gendisk structures to represent partitions
+ *</llj>
+ */
 struct gendisk {
 	/* major, first_minor and minors are input parameters only,
 	 * don't use directly.  Use disk_devt() and disk_max_parts().
@@ -182,7 +188,7 @@ struct gendisk {
 	struct hd_struct part0;
 
 	const struct block_device_operations *fops;
-	struct request_queue *queue;
+	struct request_queue *queue;/*<llj>Structure used by the kernel to manage I/O requests for this device</llj>*/
 	void *private_data;
 
 	int flags;

@@ -321,7 +321,7 @@ int register_blkdev(unsigned int major, const char *name)
 	if (!*n)
 		*n = p;
 	else
-		ret = -EBUSY;
+		ret = -EBUSY;/*<llj>设备号被占用</llj>*/
 
 	if (ret < 0) {
 		printk("register_blkdev: cannot get major %d for %s\n",

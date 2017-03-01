@@ -1413,8 +1413,17 @@ struct block_device_operations {
 	unsigned int (*check_events) (struct gendisk *disk,
 				      unsigned int clearing);
 	/* ->media_changed() is DEPRECATED, use ->check_events() instead */
+	/*<llj>Method called by the kernel to check whether the user has 
+	 *changed the media in the drive, returning a nonzero value if so. 
+	 *Obviously, this method is only applicable to drives that support
+	 *removable media (and that are smart enough to make a ¡°media changed¡±
+	 *flag available to the driver); it can be omitted in other cases
+	 </llj>*/
 	int (*media_changed) (struct gendisk *);
 	void (*unlock_native_capacity) (struct gendisk *);
+	/*<llj>this method is called in response to a media change; it gives the
+     *driver a chance to perform whatever work is required to make the new media
+     *ready for use</llj>*/
 	int (*revalidate_disk) (struct gendisk *);
 	int (*getgeo)(struct block_device *, struct hd_geometry *);
 	/* this callback is with swap_lock and sometimes page table lock held */
