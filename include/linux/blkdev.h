@@ -93,12 +93,13 @@ enum rq_cmd_type_bits {
  * as well!
  */
 struct request {
-	struct list_head queuelist;
+	struct list_head queuelist;/*<llj>用于挂在请求队列链表的节点，使用函数blkdev_dequeue_request访问它，而不能直接访  
+问</llj>*/
 	struct call_single_data csd;
 
-	struct request_queue *q;
+	struct request_queue *q; /*<llj>指向请求队列</llj>*/
 
-	unsigned int cmd_flags;
+	unsigned int cmd_flags;/*<llj>命令标识</llj>*/
 	enum rq_cmd_type_bits cmd_type;
 	unsigned long atomic_flags;
 
@@ -108,10 +109,10 @@ struct request {
 	unsigned int __data_len;	/* total data len */
 	sector_t __sector;		/* sector cursor */
 
-	struct bio *bio;
-	struct bio *biotail;
+	struct bio *bio;	/*<llj>请求中第一个未完成操作的bio</llj>*/
+	struct bio *biotail;	/*<llj>请求链表中末尾的bio</llj>*/
 
-	struct hlist_node hash;	/* merge hash */
+	struct hlist_node hash;	/* merge hash<llj>融合 hash </llj> */
 	/*
 	 * The rb_node is only used inside the io scheduler, requests
 	 * are pruned when moved to the dispatch queue. So let the

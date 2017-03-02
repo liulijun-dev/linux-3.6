@@ -119,7 +119,7 @@ struct hd_struct {
 #ifdef	CONFIG_SMP
 	struct disk_stats __percpu *dkstats;
 #else
-	struct disk_stats dkstats;
+	struct disk_stats dkstats;/*<llj>硬盘统计信息，如：读或写的扇区数、融合的扇区数、在请求队列的时间等<llj>*/  
 #endif
 	atomic_t ref;
 	struct rcu_head rcu_head;
@@ -169,7 +169,7 @@ struct gendisk {
 	 * don't use directly.  Use disk_devt() and disk_max_parts().
 	 */
 	int major;			/* major number of driver */
-	int first_minor;
+	int first_minor;           /*<llj>第一个次设备号</llj>*/
 	int minors;                     /* maximum number of minors, =1 for
                                          * disks that can't be partitioned. */
 
@@ -184,14 +184,14 @@ struct gendisk {
 	 * non-critical accesses use RCU.  Always access through
 	 * helpers.
 	 */
-	struct disk_part_tbl __rcu *part_tbl;
+	struct disk_part_tbl __rcu *part_tbl;	/*<llj>分区列表，由次设备号排序</llj>*/ 
 	struct hd_struct part0;
 
 	const struct block_device_operations *fops;
 	struct request_queue *queue;/*<llj>Structure used by the kernel to manage I/O requests for this device</llj>*/
 	void *private_data;
 
-	int flags;
+	int flags;	 /*<llj>设置驱动器状态的标志，如：可移动介质为GENHD_FL_REMOVABLE</llj>*/ 
 	struct device *driverfs_dev;  // FIXME: remove
 	struct kobject *slave_dir;
 
@@ -199,7 +199,7 @@ struct gendisk {
 	atomic_t sync_io;		/* RAID */
 	struct disk_events *ev;
 #ifdef  CONFIG_BLK_DEV_INTEGRITY
-	struct blk_integrity *integrity;
+	struct blk_integrity *integrity; /*<llj>用于数据完整性扩展<llj>*/
 #endif
 	int node_id;
 };

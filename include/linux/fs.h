@@ -705,12 +705,12 @@ struct block_device {
 	struct list_head	bd_holder_disks;
 #endif
 	struct block_device *	bd_contains;
-	unsigned		bd_block_size;
-	struct hd_struct *	bd_part;
+	unsigned		bd_block_size;/*<llj>分区块大小</llj>*/
+	struct hd_struct *	bd_part;/*<llj>如果该结构代表一个分区，bd_part指向设备的分区结构</llj>*/
 	/* number of times partitions within this device have been opened. */
 	unsigned		bd_part_count;
 	int			bd_invalidated;
-	struct gendisk *	bd_disk;
+	struct gendisk *	bd_disk;/*<llj>如果该结构代表设备，bd_disk指向设备的通用硬盘结构gendisk</llj>*/
 	struct request_queue *  bd_queue;
 	struct list_head	bd_list;
 	/*

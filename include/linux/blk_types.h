@@ -21,11 +21,12 @@ typedef void (bio_destructor_t) (struct bio *);
 
 /*
  * was unsigned short, but we might as well be ready for > 64kB I/O pages
+ *<llj> 结构bio_vec代表了内存中的一个数据段，数据段用页、偏移和长度描述</llj>
  */
 struct bio_vec {
-	struct page	*bv_page;
-	unsigned int	bv_len;
-	unsigned int	bv_offset;
+	struct page	*bv_page;/*<llj>数据段所在的页</llj>*/
+	unsigned int	bv_len; /*<llj>数据段的长度</llj>*/
+	unsigned int	bv_offset;/*<llj>数据段页内偏移</llj>*/
 };
 
 /*
@@ -35,9 +36,9 @@ struct bio_vec {
  */
 struct bio {
 	sector_t		bi_sector;	/* device address in 512 byte
-						   sectors */
+						   sectors <llj>该bio结构所要传输的第一个（512字节）扇区：磁盘的位置</llj>*/
 	struct bio		*bi_next;	/* request queue link */
-	struct block_device	*bi_bdev;
+	struct block_device	*bi_bdev;/*<llj>/相关的块设备</llj>*/
 	unsigned long		bi_flags;	/* status, command, etc */
 	unsigned long		bi_rw;		/* bottom bits READ/WRITE,
 						 * top bits priority
@@ -49,7 +50,7 @@ struct bio {
 	/* Number of segments in this BIO after
 	 * physical address coalescing is performed.
 	 */
-	unsigned int		bi_phys_segments;
+	unsigned int		bi_phys_segments;/*<llj>结合后的片段数目</llj>*/
 
 	unsigned int		bi_size;	/* residual I/O count */
 
@@ -57,8 +58,8 @@ struct bio {
 	 * To keep track of the max segment size, we account for the
 	 * sizes of the first and last mergeable segments in this bio.
 	 */
-	unsigned int		bi_seg_front_size;
-	unsigned int		bi_seg_back_size;
+	unsigned int		bi_seg_front_size;/*<llj>第一个可合并的段大小</llj>*/
+	unsigned int		bi_seg_back_size;/*<llj>最后一个可合并的段大小</llj>*/
 
 	unsigned int		bi_max_vecs;	/* max bvl_vecs we can hold */
 
@@ -66,7 +67,7 @@ struct bio {
 
 	struct bio_vec		*bi_io_vec;	/* the actual vec list */
 
-	bio_end_io_t		*bi_end_io;
+	bio_end_io_t		*bi_end_io; /*<llj>I/O完成方法</llj>*/
 
 	void			*bi_private;
 #ifdef CONFIG_BLK_CGROUP
