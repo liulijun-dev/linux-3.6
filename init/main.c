@@ -473,6 +473,7 @@ asmlinkage void __init start_kernel(void)
 	 * lockdep hash:
 	 */
 	lockdep_init();
+	/*<llj>返回在启动时的那个cpu的id，当前什么也不操作</llj>*/
 	smp_setup_processor_id();
 	debug_objects_early_init();
 
@@ -483,7 +484,7 @@ asmlinkage void __init start_kernel(void)
 
 	cgroup_init_early();
 
-	local_irq_disable();
+	local_irq_disable();/*<llj>关闭当前cpu的中断</llj>*/
 	early_boot_irqs_disabled = true;
 
 /*
@@ -492,7 +493,7 @@ asmlinkage void __init start_kernel(void)
  */
 	tick_init();
 	boot_cpu_init();
-	page_address_init();
+	page_address_init();/*<llj>初始化页地址，使用链表将其链接起来</llj>*/
 	printk(KERN_NOTICE "%s", linux_banner);
 	setup_arch(&command_line);
 	mm_init_owner(&init_mm, &init_task);
@@ -504,8 +505,9 @@ asmlinkage void __init start_kernel(void)
 
 	build_all_zonelists(NULL, NULL);
 	page_alloc_init();
-
+          /*<llj>打印linux内核启动参数</llj>*/
 	printk(KERN_NOTICE "Kernel command line: %s\n", boot_command_line);
+          /*<llj>对内核选项的两次解析</llj>*/
 	parse_early_param();
 	parse_args("Booting kernel", static_command_line, __start___param,
 		   __stop___param - __start___param,
@@ -521,7 +523,7 @@ asmlinkage void __init start_kernel(void)
 	pidhash_init();
 	vfs_caches_init_early();
 	sort_main_extable();
-	trap_init();
+	trap_init();/*<llj>完成对系统保留中断向量(异常、非屏蔽中断以及系统调用)的初始化</llj>*/
 	mm_init();
 
 	/*
@@ -542,18 +544,18 @@ asmlinkage void __init start_kernel(void)
 	}
 	idr_init_cache();
 	perf_event_init();
-	rcu_init();
+	rcu_init();/*<llj>初始化RCU(Read-Copy Update)机制</llj>*/
 	radix_tree_init();
 	/* init some links before init_ISA_irqs() */
 	early_irq_init();
-	init_IRQ();
+	init_IRQ();/*<llj>完成其余中断向量的初始化</llj>*/
 	prio_tree_init();
-	init_timers();
-	hrtimers_init();
+	init_timers();/*<llj>初始化定时器的相关数据结构</llj>*/
+	hrtimers_init();/*<llj>对高精度时钟进行初始化</llj>*/
 	softirq_init();
 	timekeeping_init();
-	time_init();
-	profile_init();
+	time_init();/*<llj>初始化系统时钟源</llj>*/
+	profile_init();/*<llj>对内核的profile(内核性能调试工具)功能进行初始化</llj>*/
 	call_function_init();
 	if (!irqs_disabled())
 		printk(KERN_CRIT "start_kernel(): bug: interrupts were "
@@ -599,6 +601,7 @@ asmlinkage void __init start_kernel(void)
 	if (late_time_init)
 		late_time_init();
 	sched_clock_init();
+	/*<llj>cpu性能测试函数，可以计算出cpu在1s内执行了多少次一个极短循环，计算出来的值经过处理后等到BogoMIPS值</llj>*/
 	calibrate_delay();
 	pidmap_init();
 	anon_vma_init();
@@ -608,7 +611,7 @@ asmlinkage void __init start_kernel(void)
 #endif
 	thread_info_cache_init();
 	cred_init();
-	fork_init(totalram_pages);
+	fork_init(totalram_pages);/*<llj>根据物理内存的大小计算出可以创建进程的数量</llj>*/
 	proc_caches_init();
 	buffer_init();
 	key_init();
@@ -625,7 +628,7 @@ asmlinkage void __init start_kernel(void)
 	cpuset_init();
 	taskstats_init_early();
 	delayacct_init();
-
+           /*<llj>测试该cpu的各种缺陷，记录检测到的缺陷，以便于内核的其他部分以后可以使用它们的工作</llj>*/
 	check_bugs();
 
 	acpi_early_init(); /* before LAPIC and SMP init */
@@ -634,7 +637,7 @@ asmlinkage void __init start_kernel(void)
 	ftrace_init();
 
 	/* Do the rest non-__init'ed, we're now alive */
-	rest_init();
+	rest_init();/*<llj>创建init进程</llj>*/
 }
 
 /* Call all constructor functions linked into the kernel. */
@@ -801,6 +804,7 @@ static noinline int init_post(void)
 {
 	/* need to finish all async __init code before freeing the memory */
 	async_synchronize_full();
+	/*<llj>至此，内核初始化已经接近尾声，所有的初始化函数已经被调用，故可舍弃__init_begin至__init_end之间的数据</llj>*/
 	free_initmem();
 	mark_rodata_ro();
 	system_state = SYSTEM_RUNNING;
@@ -861,7 +865,7 @@ static int __init kernel_init(void * unused)
 	do_pre_smp_initcalls();
 	lockup_detector_init();
 
-	smp_init();
+	smp_init();/*<llj>激活smp系统中的其他cpu</llj>*/
 	sched_init_smp();
 
 	do_basic_setup();
