@@ -492,7 +492,7 @@ struct usb3_lpm_parameters {
  * usb_set_device_state().
  */
 struct usb_device {
-	int		devnum;
+	int		devnum;/*<llj>在usb总线上的地址</llj>*/
 	char		devpath[16];
 	u32		route;
 	enum usb_device_state	state;
@@ -501,7 +501,7 @@ struct usb_device {
 	struct usb_tt	*tt;
 	int		ttport;
 
-	unsigned int toggle[2];
+	unsigned int toggle[2];/*<llj>实现交替传输，data[0]，data[1]</llj>*/
 
 	struct usb_device *parent;
 	struct usb_bus *bus;
@@ -519,8 +519,8 @@ struct usb_device {
 
 	char **rawdescriptors;
 
-	unsigned short bus_mA;
-	u8 portnum;
+	unsigned short bus_mA;/*<llj>总线上可用的电流</llj>*/
+	u8 portnum;/*<llj>父设备的接口号，也就是hub的第几个端口</llj>*/
 	u8 level;
 
 	unsigned can_submit:1;
@@ -542,8 +542,8 @@ struct usb_device {
 
 	struct list_head filelist;
 
-	int maxchild;
-	struct usb_device **children;
+	int maxchild;/*<llj>如果该设备是hub，该hub有多少端口</llj>*/
+	struct usb_device **children;/*<llj>如果是hub，则表示连接在该hub上的设备</llj>*/
 
 	u32 quirks;
 	atomic_t urbnum;
