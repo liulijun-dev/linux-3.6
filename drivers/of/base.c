@@ -45,7 +45,7 @@ struct alias_prop {
 
 static LIST_HEAD(aliases_lookup);
 
-struct device_node *allnodes;
+struct device_node *allnodes;/*<llj>设备树中注册的设备</llj>*/
 struct device_node *of_chosen;
 struct device_node *of_aliases;
 

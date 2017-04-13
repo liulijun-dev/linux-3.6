@@ -94,7 +94,7 @@ static int spi_match_device(struct device *dev, struct device_driver *drv)
 		return 1;
 
 	if (sdrv->id_table)
-		return !!spi_match_id(sdrv->id_table, spi);
+		return !!spi_match_id(sdrv->id_table, spi);/*<llj>别名出现在id_table中也可以匹配成功</llj>*/
 
 	return strcmp(spi->modalias, drv->name) == 0;
 }

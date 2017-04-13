@@ -15,11 +15,11 @@ struct timer_list {
 	 * same cacheline
 	 */
 	struct list_head entry;
-	unsigned long expires;
+	unsigned long expires;/*<llj>定时器到期时间</llj>*/
 	struct tvec_base *base;
 
 	void (*function)(unsigned long);
-	unsigned long data;
+	unsigned long data;/*<llj>传入function的参数</llj>*/
 
 	int slack;
 

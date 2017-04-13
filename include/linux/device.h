@@ -679,7 +679,7 @@ struct device {
 	/* arch specific additions */
 	struct dev_archdata	archdata;
 
-	struct device_node	*of_node; /* associated device tree node */
+	struct device_node	*of_node; /* associated device tree node<llj>对应的设备树节点</llj> */
 
 	dev_t			devt;	/* dev_t, creates the sysfs "dev" */
 	u32			id;	/* device instance */

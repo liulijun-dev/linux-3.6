@@ -154,8 +154,8 @@ static inline void cpu_relax(void)
 }
 
 #undef  HZ
-#define HZ 1000
-static inline uint32_t raid6_jiffies(void)
+#define HZ 1000/*<llj>定时器的频率，也称节拍率。每秒中断1000次，每1ms中断一次</llj>*/
+static inline uint32_t raid6_jiffies(void)/*<llj>返回的是毫秒级</llj>*/
 {
 	struct timeval tv;
 	gettimeofday(&tv, NULL);

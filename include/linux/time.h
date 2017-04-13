@@ -19,7 +19,7 @@ struct timespec {
 
 struct timeval {
 	__kernel_time_t		tv_sec;		/* seconds */
-	__kernel_suseconds_t	tv_usec;	/* microseconds */
+	__kernel_suseconds_t	tv_usec;	/* microseconds<llj>Œ¢√Î</llj> */
 };
 
 struct timezone {

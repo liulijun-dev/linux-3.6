@@ -846,7 +846,7 @@ struct inode {
 	struct hlist_node	i_hash;
 	struct list_head	i_wb_list;	/* backing dev IO list */
 	struct list_head	i_lru;		/* inode LRU list */
-	struct list_head	i_sb_list;
+	struct list_head	i_sb_list;/*<llj>add to inode->i_sb->s_inodes</llj>*/
 	union {
 		struct hlist_head	i_dentry;/*<llj>该inode对应的dentry</llj>*/
 		struct rcu_head		i_rcu;
@@ -1533,7 +1533,7 @@ struct super_block {
 #endif
 	const struct xattr_handler **s_xattr;
 
-	struct list_head	s_inodes;	/* all inodes */
+	struct list_head	s_inodes;	/* all inodes <llj>内容为inode->i_sb_list</llj>*/
 	struct hlist_bl_head	s_anon;		/* anonymous dentries for (nfs) exporting */
 #ifdef CONFIG_SMP
 	struct list_head __percpu *s_files;

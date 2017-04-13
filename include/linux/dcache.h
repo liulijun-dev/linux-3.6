@@ -133,8 +133,8 @@ struct dentry {
 		struct list_head d_child;	/* child of parent list */
 	 	struct rcu_head d_rcu;
 	} d_u;
-	struct list_head d_subdirs;	/* our children */
-	struct hlist_node d_alias;	/* inode alias list */
+	struct list_head d_subdirs;	/* our children<llj>dentry->d_u->d_child±»Ìí¼Óµ½d_subdirs</llj> */
+	struct hlist_node d_alias;	/* inode alias list<llj>add to inode->i_dentry</llj> */
 };
 
 /*
