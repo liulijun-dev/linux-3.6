@@ -347,6 +347,7 @@ struct klist_node *klist_next(struct klist_iter *i)
 		next = to_klist_node(i->i_klist->k_list.next);
 
 	i->i_cur = NULL;
+        /*<llj>说明i->i_klist->k_list是一个循环队列</llj>*/
 	while (next != to_klist_node(&i->i_klist->k_list)) {
 		if (likely(!knode_dead(next))) {
 			kref_get(&next->n_ref);
