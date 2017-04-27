@@ -535,7 +535,7 @@ i2c_new_device(struct i2c_adapter *adap, struct i2c_board_info const *info)
 	if (status)
 		goto out_err;
 
-	client->dev.parent = &client->adapter->dev;
+	client->dev.parent = &client->adapter->dev;/*<llj>说明i2c设备挂载在adapter上</llj>*/
 	client->dev.bus = &i2c_bus_type;
 	client->dev.type = &i2c_client_type;
 	client->dev.of_node = info->of_node;
