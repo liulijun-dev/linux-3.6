@@ -359,7 +359,7 @@ struct i2c_algorithm {
 	   smbus_xfer. If set to NULL, the SMBus protocol is simulated
 	   using common I2C messages */
 	/* master_xfer should return the number of messages successfully
-	   processed, or a negative value on error */
+	   processed, or a negative value on error <llj>I2C´«Êäº¯ÊıÖ¸Õë</llj>*/
 	int (*master_xfer)(struct i2c_adapter *adap, struct i2c_msg *msgs,
 			   int num);
 	int (*smbus_xfer) (struct i2c_adapter *adap, u16 addr,

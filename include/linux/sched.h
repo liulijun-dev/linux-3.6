@@ -543,7 +543,7 @@ struct signal_struct {
 	/* current thread group signal load-balancing target: */
 	struct task_struct	*curr_target;
 
-	/* shared signal handling: */
+	/* shared signal handling<llj>线程所属进程的待处理信号</llj>: */
 	struct sigpending	shared_pending;
 
 	/* thread group exit support */
@@ -1414,15 +1414,16 @@ struct task_struct {
 /* namespaces */
 	struct nsproxy *nsproxy;
 /* signal handlers */
-	struct signal_struct *signal;
-	struct sighand_struct *sighand;
+	struct signal_struct *signal;/*<llj>Pointer to the process's signal descriptor</llj>*/
+	struct sighand_struct *sighand;/*<llj>Pointer to the process's signal handler descriptor</llj>*/
 
 	sigset_t blocked, real_blocked;
 	sigset_t saved_sigmask;	/* restored if set_restore_sigmask() was used */
-	struct sigpending pending;
+	struct sigpending pending;/*<llj>storing the private pending signals,代表线程本身要处理的singal</llj>*/
 
-	unsigned long sas_ss_sp;
+	unsigned long sas_ss_sp;/*<llj>Address of alternative signal handler stack</llj>*/
 	size_t sas_ss_size;
+	/*<llj>Pointer to a function used by a device driver to block some signals of the process</llj>*/
 	int (*notifier)(void *priv);
 	void *notifier_data;
 	sigset_t *notifier_mask;

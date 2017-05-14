@@ -1055,7 +1055,7 @@ static int __send_signal(int sig, struct siginfo *info, struct task_struct *t,
 	if (!prepare_signal(sig, t,
 			from_ancestor_ns || (info == SEND_SIG_FORCED)))
 		goto ret;
-
+           /*<llj>send signal to process or thread</llj>*/
 	pending = group ? &t->signal->shared_pending : &t->pending;
 	/*
 	 * Short-circuit ignored signals and support queuing
@@ -1063,6 +1063,7 @@ static int __send_signal(int sig, struct siginfo *info, struct task_struct *t,
 	 * detailed information about the cause of the signal.
 	 */
 	result = TRACE_SIGNAL_ALREADY_PENDING;
+	/*<llj>如果是非实时信号（<32）且该信号已经在等待队列中，则忽略</llj>*/
 	if (legacy_queue(pending, sig))
 		goto ret;
 

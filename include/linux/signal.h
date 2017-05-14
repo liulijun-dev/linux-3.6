@@ -26,8 +26,8 @@ struct sigqueue {
 #define SIGQUEUE_PREALLOC	1
 
 struct sigpending {
-	struct list_head list;
-	sigset_t signal;
+	struct list_head list;/*<llj>sigqueue链表,__send_signal函数中内赋值</llj>*/
+	sigset_t signal;/*<llj>保存所有待处理信号的集合，每个信号占一位</llj>*/
 };
 
 /*

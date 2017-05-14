@@ -14,6 +14,15 @@
 /*
  * Resources are tree-like, allowing
  * nesting etc..
+ *<llj>
+ *在Linux中，系统资源包括I/O、Memory、Register、IRQ、DMA、Bus等多种类型。
+ *这些资源大多具有独占性，不允许多个设备同时使用，因此Linux内核提供了一些
+ *API，用于分配、管理这些资源。当某个设备需要使用某些资源时，只需利用
+ *struct resource组织这些资源（如名称、类型、起始、结束地址等），并保存在该
+ *设备的resource指针中即可。然后在设备probe时，设备需求会调用资源管理接口，
+ *分配、使用这些资源。而内核的资源管理逻辑，可以判断这些资源是否已被使用、是
+ *否可被使用等等
+ *</llj>
  */
 struct resource {
 	resource_size_t start;
