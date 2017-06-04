@@ -778,13 +778,15 @@ struct posix_acl;
 /*
  *<llj>
  *对应着磁盘上的文件,look inode_init_always() in inode.c
+ *包含文件的访问权限、属主、组、大小、生成时间、访问时间、最后修改时间等，
+ *是linux管理文件系统的最基本单位，也是文件系统连接任何子目录、文件的桥梁
  *</llj>
  * Keep mostly read-only and often accessed (especially for
  * the RCU path lookup and 'stat' data) fields at the beginning
  * of the 'struct inode'
  */
 struct inode {
-	umode_t			i_mode;
+	umode_t			i_mode;/*<llj>inode权限</llj>*/
 	unsigned short		i_opflags;
 	kuid_t			i_uid;
 	kgid_t			i_gid;
@@ -817,10 +819,10 @@ struct inode {
 		unsigned int __i_nlink;
 	};
 	dev_t			i_rdev;/*<llj>For inodes that represent device files, this field contains the actual device number.</llj>*/
-	loff_t			i_size;
-	struct timespec		i_atime;
-	struct timespec		i_mtime;
-	struct timespec		i_ctime;
+	loff_t			i_size;/*<llj>inode所代表的文件大小</llj>*/
+	struct timespec		i_atime;/*<llj>inode最近一次的存储时间</llj>*/
+	struct timespec		i_mtime;/*<llj>inode最近一次的修改时间</llj>*/
+	struct timespec		i_ctime;/*<llj>inode的产生时间</llj>*/
 	spinlock_t		i_lock;	/* i_blocks, i_bytes, maybe i_size */
 	unsigned short          i_bytes;
 	unsigned int		i_blkbits; /*<llj>equal to sb->s_blocksize_bits</llj>*/
@@ -852,7 +854,7 @@ struct inode {
 		struct rcu_head		i_rcu;
 	};
 	u64			i_version;
-	atomic_t		i_count;
+	atomic_t		i_count;/*<llj>引用计数</llj>*/
 	atomic_t		i_dio_count;
 	atomic_t		i_writecount;
 	const struct file_operations	*i_fop;	/* former ->i_op->default_file_ops */
@@ -1032,7 +1034,7 @@ static inline int ra_has_index(struct file_ra_state *ra, pgoff_t index)
 
 /**
  *<llj>
- *代表被打开的文件，只有open操作才会创建该结构体，copy仅仅增加f_count
+ *代表被内核打开的文件，只有open操作才会创建该结构体，copy仅仅增加f_count
  *</llj>
  */
 struct file {
@@ -1058,9 +1060,9 @@ struct file {
 	int			f_sb_list_cpu;
 #endif
 	atomic_long_t		f_count;/*<llj>计数，为0时调用file_operation中的release方法</llj>*/
-	unsigned int 		f_flags;
-	fmode_t			f_mode;
-	loff_t			f_pos;
+	unsigned int 		f_flags;/*<llj>文件标志，如O_RDONLY,O_NONBLOCK, O_SYNC</llj>*/
+	fmode_t			f_mode;/*<llj>文件读/写模式，如FMODE_READ, FMODE_WRITE</llj>*/
+	loff_t			f_pos;/*<llj>文件当前读写位置</llj>*/
 	struct fown_struct	f_owner;
 	const struct cred	*f_cred;
 	struct file_ra_state	f_ra;
@@ -1070,7 +1072,7 @@ struct file {
 	void			*f_security;
 #endif
 	/* needed for tty driver, and maybe others */
-	void			*private_data;
+	void			*private_data;/*<llj>主要在设备驱动中使用，存储设备驱动自定义的用于描述设备的结构结构体</llj>*/
 
 #ifdef CONFIG_EPOLL
 	/* Used by fs/eventpoll.c to link all the hooks to this file */

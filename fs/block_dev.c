@@ -623,7 +623,8 @@ void bdput(struct block_device *bdev)
 }
 
 EXPORT_SYMBOL(bdput);
- 
+
+ /*<llj>根据inode找到对应的块设备</llj>*/
 static struct block_device *bd_acquire(struct inode *inode)
 {
 	struct block_device *bdev;
