@@ -25,10 +25,10 @@
  *</llj>
  */
 struct resource {
-	resource_size_t start;
-	resource_size_t end;
+	resource_size_t start;/*<llj>资源开始值，随flags而变</llj>*/
+	resource_size_t end;/*<llj>资源结束值，随flags而变</llj>*/
 	const char *name;
-	unsigned long flags;
+	unsigned long flags;/*<llj>资源类型，如IORESURCE_IO,IORESOURCE_MEM</llj>*/
 	struct resource *parent, *sibling, *child;
 };
 
