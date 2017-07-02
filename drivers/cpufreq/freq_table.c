@@ -77,8 +77,8 @@ int cpufreq_frequency_table_verify(struct cpufreq_policy *policy,
 			next_larger = freq;
 	}
 
-	if (!count)
-		policy->max = next_larger;
+	if (!count)/*<llj>确保至少有一个有效的频率位于policy->minx和policy->max的范围内</llj>*/
+		policy->max = next_larger;/*<llj>next_larger为最小上界</llj>*/
 
 	cpufreq_verify_within_limits(policy, policy->cpuinfo.min_freq,
 				     policy->cpuinfo.max_freq);
@@ -90,7 +90,7 @@ int cpufreq_frequency_table_verify(struct cpufreq_policy *policy,
 }
 EXPORT_SYMBOL_GPL(cpufreq_frequency_table_verify);
 
-
+/*cpufreq_driver的target()函数的辅助函数，返回需要设定的频率在频率表中的索引*/
 int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
 				   struct cpufreq_frequency_table *table,
 				   unsigned int target_freq,
@@ -157,7 +157,7 @@ int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
 			break;
 		}
 	}
-	if (optimal.index > i) {
+	if (optimal.index > i) {/*option.index>i能够满足?*/
 		if (suboptimal.index > i)
 			return -EINVAL;
 		*index = suboptimal.index;

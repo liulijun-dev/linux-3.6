@@ -937,12 +937,12 @@ static int __init meminfo_cmp(const void *_a, const void *_b)
 	return cmp < 0 ? -1 : cmp > 0 ? 1 : 0;
 }
 
-void __init setup_arch(char **cmdline_p)
+void __init setup_arch(char **cmdline_p)/*<llj>start_kernel->setup_arch</llj>*/
 {
 	struct machine_desc *mdesc;
 
 	setup_processor();
-	mdesc = setup_machine_fdt(__atags_pointer);
+	mdesc = setup_machine_fdt(__atags_pointer);/*</llj>建立起了与设备树的关系</llj>*/
 	if (!mdesc)
 		mdesc = setup_machine_tags(machine_arch_type);
 	machine_desc = mdesc;

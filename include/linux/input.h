@@ -1504,17 +1504,17 @@ int input_flush_device(struct input_handle *handle, struct file *file);
 
 void input_event(struct input_dev *dev, unsigned int type, unsigned int code, int value);
 void input_inject_event(struct input_handle *handle, unsigned int type, unsigned int code, int value);
-
+/*<llj>报告键值</llj>*/
 static inline void input_report_key(struct input_dev *dev, unsigned int code, int value)
 {
 	input_event(dev, EV_KEY, code, !!value);
 }
-
+/*<llj>报告相对坐标</llj>*/
 static inline void input_report_rel(struct input_dev *dev, unsigned int code, int value)
 {
 	input_event(dev, EV_REL, code, value);
 }
-
+/*<llj>报告绝对坐标</llj>*/
 static inline void input_report_abs(struct input_dev *dev, unsigned int code, int value)
 {
 	input_event(dev, EV_ABS, code, value);
@@ -1529,7 +1529,7 @@ static inline void input_report_switch(struct input_dev *dev, unsigned int code,
 {
 	input_event(dev, EV_SW, code, !!value);
 }
-
+/*<llj>报告同步事件</llj>*/
 static inline void input_sync(struct input_dev *dev)
 {
 	input_event(dev, EV_SYN, SYN_REPORT, 0);

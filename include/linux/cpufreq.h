@@ -75,7 +75,7 @@ struct cpufreq_cpuinfo {
 	unsigned int		min_freq;
 
 	/* in 10^(-9) s = nanoseconds */
-	unsigned int		transition_latency;
+	unsigned int		transition_latency; /*<llj>cpu进行频率切换需要的延迟</llj>*/
 };
 
 struct cpufreq_real_policy {
@@ -93,11 +93,11 @@ struct cpufreq_policy {
 	unsigned int		cpu;    /* cpu nr of registered CPU */
 	struct cpufreq_cpuinfo	cpuinfo;/* see above */
 
-	unsigned int		min;    /* in kHz */
-	unsigned int		max;    /* in kHz */
+	unsigned int		min;    /* in kHz <llj>缺省策略下cpu支持的最小频率</llj>*/
+	unsigned int		max;    /* in kHz <llj>缺省策略下cpu支持的最大频率</llj>*/
 	unsigned int		cur;    /* in kHz, only needed if cpufreq
-					 * governors are used */
-	unsigned int		policy; /* see above */
+					 * governors are used<llj>cpu当前频率</llj> */
+	unsigned int		policy; /* see above<llj>cpu缺省策略</llj> */
 	struct cpufreq_governor	*governor; /* see below */
 
 	struct work_struct	update; /* if update_policy() needs to be
@@ -217,13 +217,14 @@ struct cpufreq_driver {
 
 	/* needed by all drivers */
 	int	(*init)		(struct cpufreq_policy *policy);
+	/*<llj>当用户设置一个新的策略时，根据新旧策略检验新策略设置的有效性并验证</llj>*/
 	int	(*verify)	(struct cpufreq_policy *policy);
 
 	/* define one out of two */
-	int	(*setpolicy)	(struct cpufreq_policy *policy);
+	int	(*setpolicy)	(struct cpufreq_policy *policy);/*<llj>cpu具备在一定范围内独立调整频率的能力</llj>*/
 	int	(*target)	(struct cpufreq_policy *policy,
 				 unsigned int target_freq,
-				 unsigned int relation);
+				 unsigned int relation);/*<llj>由cpu核心层根据系统负载和策略综合将频率调整到target_freq</llj>*/
 
 	/* should be defined, if possible */
 	unsigned int	(*get)	(unsigned int cpu);
