@@ -158,7 +158,7 @@ enum regulator_type {
 /**
  * struct regulator_desc - Static regulator descriptor
  *
- * Each regulator registered with the core is described with a
+ * Each regulator<ll>稳压器</llj> registered with the core is described with a
  * structure of this type and a struct regulator_config.  This
  * structure contains the non-varying parts of the regulator
  * description.
@@ -197,7 +197,7 @@ struct regulator_desc {
 
 	unsigned int min_uV;
 	unsigned int uV_step;
-	unsigned int ramp_delay;
+	unsigned int ramp_delay;/*<llj>电压变化后稳定下来所需时间</llj>*/
 
 	const unsigned int *volt_table;
 

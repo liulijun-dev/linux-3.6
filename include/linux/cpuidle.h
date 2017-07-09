@@ -44,14 +44,14 @@ struct cpuidle_state {
 	char		desc[CPUIDLE_DESC_LEN];
 
 	unsigned int	flags;
-	unsigned int	exit_latency; /* in US */
+	unsigned int	exit_latency; /* in US <llj>退出该idle状态需要的延时</llj>*/
 	int		power_usage; /* in mW */
 	unsigned int	target_residency; /* in US */
 	bool		disabled; /* disabled on all CPUs */
 
 	int (*enter)	(struct cpuidle_device *dev,
 			struct cpuidle_driver *drv,
-			int index);
+			int index);/*<llj>进入该idle状态需要实现的方法</llj>*/
 
 	int (*enter_dead) (struct cpuidle_device *dev, int index);
 };
@@ -135,7 +135,7 @@ struct cpuidle_driver {
 	unsigned int		power_specified:1;
 	/* set to 1 to use the core cpuidle time keeping (for all states). */
 	unsigned int		en_core_tk_irqen:1;
-	struct cpuidle_state	states[CPUIDLE_STATE_MAX];
+	struct cpuidle_state	states[CPUIDLE_STATE_MAX];/*<llj>存储各种不同Idle级别的信息</llj>*/
 	int			state_count;
 	int			safe_state_index;
 };
