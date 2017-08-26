@@ -282,7 +282,7 @@ struct dev_pm_ops {
 	int (*thaw_noirq)(struct device *dev);
 	int (*poweroff_noirq)(struct device *dev);
 	int (*restore_noirq)(struct device *dev);
-	int (*runtime_suspend)(struct device *dev);
+	int (*runtime_suspend)(struct device *dev);/*<llj>用行时的电源管理</llj>*/
 	int (*runtime_resume)(struct device *dev);
 	int (*runtime_idle)(struct device *dev);
 };

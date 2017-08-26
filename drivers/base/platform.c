@@ -714,7 +714,7 @@ int platform_pm_suspend(struct device *dev)
 
 	if (drv->pm) {
 		if (drv->pm->suspend)
-			ret = drv->pm->suspend(dev);
+			ret = drv->pm->suspend(dev);/*<llj>ÓÅÏÈÖ´ÐÐdrm->pm_suspend</llj>*/
 	} else {
 		ret = platform_legacy_suspend(dev, PMSG_SUSPEND);
 	}

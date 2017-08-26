@@ -1188,7 +1188,7 @@ static struct regulator_dev *regulator_dev_lookup(struct device *dev,
 	return NULL;
 }
 
-/* Internal regulator request function */
+/* Internal regulator request function<llj>linux中以_开始的函数为内部函数</llj> */
 static struct regulator *_regulator_get(struct device *dev, const char *id,
 					int exclusive)
 {

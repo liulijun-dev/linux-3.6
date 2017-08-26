@@ -49,7 +49,7 @@
  * where to place its SVC stack
  */
 struct secondary_data secondary_data;
-
+/*<llj>ipi:inter processor interrupt</llj>*/
 enum ipi_msg_type {
 	IPI_TIMER = 2,
 	IPI_RESCHEDULE,

@@ -21,8 +21,8 @@ struct clock_event_device;
 enum clock_event_mode {
 	CLOCK_EVT_MODE_UNUSED = 0,
 	CLOCK_EVT_MODE_SHUTDOWN,
-	CLOCK_EVT_MODE_PERIODIC,
-	CLOCK_EVT_MODE_ONESHOT,
+	CLOCK_EVT_MODE_PERIODIC,/*<llj>老式的周期性模式</llj>*/
+	CLOCK_EVT_MODE_ONESHOT,/*<llj>一次一次产生中断</llj>*/
 	CLOCK_EVT_MODE_RESUME,
 };
 

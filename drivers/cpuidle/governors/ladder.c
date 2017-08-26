@@ -89,12 +89,12 @@ static int ladder_select_state(struct cpuidle_driver *drv,
 	/* consider promotion */
 	if (last_idx < drv->state_count - 1 &&
 	    last_residency > last_state->threshold.promotion_time &&
-	    drv->states[last_idx + 1].exit_latency <= latency_req) {
+	    drv->states[last_idx + 1].exit_latency <= latency_req) {/*<llj>是否要进入更深层次的C状态</llj>*/
 		last_state->stats.promotion_count++;
 		last_state->stats.demotion_count = 0;
 		if (last_state->stats.promotion_count >= last_state->threshold.promotion_count) {
 			ladder_do_selection(ldev, last_idx, last_idx + 1);
-			return last_idx + 1;
+			return last_idx + 1;/*<llj>下一个状态</llj>*/
 		}
 	}
 

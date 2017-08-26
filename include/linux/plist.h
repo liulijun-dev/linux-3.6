@@ -81,7 +81,7 @@
 struct plist_head {
 	struct list_head node_list;
 };
-
+/*<llj>优先级列表</llj>*/
 struct plist_node {
 	int			prio;
 	struct list_head	prio_list;
