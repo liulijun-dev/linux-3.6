@@ -132,7 +132,7 @@
 
 
 #else /* !CONFIG_TRACE_IRQFLAGS_SUPPORT */
-
+/*<llj>local_irq_enable和local_irq_disable针对的不是外部中断控制器，而是直接让CPU本身不响应中断请求</llj>*/
 #define local_irq_enable()	do { raw_local_irq_enable(); } while (0)
 #define local_irq_disable()	do { raw_local_irq_disable(); } while (0)
 #define local_irq_save(flags)					\
