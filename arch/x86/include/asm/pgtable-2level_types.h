@@ -23,8 +23,8 @@ typedef union {
  * traditional i386 two-level paging structure:
  */
 
-#define PGDIR_SHIFT	22
-#define PTRS_PER_PGD	1024
+#define PGDIR_SHIFT	22 /*<llj>线性地址中PGD下标段的起始位置</llj>*/
+#define PTRS_PER_PGD	1024 /*<llj>PGD目录项中包含1024个目录项</llj>*/
 
 
 /*
@@ -32,6 +32,6 @@ typedef union {
  * PMD directory physically.
  */
 
-#define PTRS_PER_PTE	1024
+#define PTRS_PER_PTE	1024 /*<llj>一个PT中包含1024个表项(PTE)</llj>*/
 
 #endif /* _ASM_X86_PGTABLE_2LEVEL_DEFS_H */

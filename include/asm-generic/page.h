@@ -47,7 +47,7 @@ typedef struct {
 } pgd_t;
 typedef struct {
 	unsigned long pgprot;
-} pgprot_t;
+} pgprot_t; /*<llj>页面保护结构，与pte_t的低12位相对应</llj>*/
 typedef struct page *pgtable_t;
 
 #define pte_val(x)	((x).pte)

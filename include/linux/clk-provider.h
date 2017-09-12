@@ -125,7 +125,7 @@ struct clk_ops {
 struct clk_init_data {
 	const char		*name;
 	const struct clk_ops	*ops;
-	const char		**parent_names;
+	const char		**parent_names;/*<llj>可能的父级时钟的名称列表</llj>*/
 	u8			num_parents;
 	unsigned long		flags;
 };

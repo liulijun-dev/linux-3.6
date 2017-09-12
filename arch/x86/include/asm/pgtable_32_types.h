@@ -14,7 +14,7 @@
 # include <asm/pgtable-2level_types.h>
 #endif
 
-#define PGDIR_SIZE	(1UL << PGDIR_SHIFT)
+#define PGDIR_SIZE	(1UL << PGDIR_SHIFT) /*<llj>PGD中每一个目录项所代表的空间大小(4M)</llj>*/
 #define PGDIR_MASK	(~(PGDIR_SIZE - 1))
 
 /* Just any arbitrary offset to the start of the vmalloc VM area: the
