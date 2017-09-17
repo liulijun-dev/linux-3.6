@@ -205,7 +205,7 @@ struct vm_fault {
 struct vm_operations_struct {
 	void (*open)(struct vm_area_struct * area);
 	void (*close)(struct vm_area_struct * area);
-	int (*fault)(struct vm_area_struct *vma, struct vm_fault *vmf);
+	int (*fault)(struct vm_area_struct *vma, struct vm_fault *vmf);/*<llj>page fault所调用的函数</llj>*/
 
 	/* notification that a previously read-only page is about to become
 	 * writable, if an error is returned it will cause a SIGBUS */

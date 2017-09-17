@@ -1784,7 +1784,7 @@ int expand_downwards(struct vm_area_struct *vma,
 	if (unlikely(anon_vma_prepare(vma)))
 		return -ENOMEM;
 
-	address &= PAGE_MASK;
+	address &= PAGE_MASK; /*<llj>将地址按页面边界对齐</llj>*/
 	error = security_mmap_addr(address);
 	if (error)
 		return error;
@@ -1802,10 +1802,10 @@ int expand_downwards(struct vm_area_struct *vma,
 		unsigned long size, grow;
 
 		size = vma->vm_end - address;
-		grow = (vma->vm_start - address) >> PAGE_SHIFT;
+		grow = (vma->vm_start - address) >> PAGE_SHIFT;/*<llj>需要增长几个页面</llj>*/
 
 		error = -ENOMEM;
-		if (grow <= vma->vm_pgoff) {
+		if (grow <= vma->vm_pgoff) { /*<llj>扩展的资源限制</llj>*/
 			error = acct_stack_growth(vma, size, grow);
 			if (!error) {
 				vma->vm_start = address;

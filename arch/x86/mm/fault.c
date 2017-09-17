@@ -1139,18 +1139,18 @@ retry:
 	}
 	if (likely(vma->vm_start <= address))
 		goto good_area;
-	if (unlikely(!(vma->vm_flags & VM_GROWSDOWN))) {
+	if (unlikely(!(vma->vm_flags & VM_GROWSDOWN))) { /*<llj>找到的VMA是堆栈，因为堆栈位于用户空间的顶部且向下伸展</llj>*/
 		bad_area(regs, error_code, address);
 		return;
 	}
-	if (error_code & PF_USER) {
+	if (error_code & PF_USER) { /*<llj>映射失败发生在用户空间</llj>*/
 		/*
 		 * Accessing the stack below %sp is always a bug.
 		 * The large cushion allows instructions like enter
 		 * and pusha to work. ("enter $65535, $31" pushes
 		 * 32 pointers and then decrements %sp by 65535.)
 		 */
-		if (unlikely(address + 65536 + 32 * sizeof(unsigned long) < regs->sp)) {
+		if (unlikely(address + 65536 + 32 * sizeof(unsigned long) < regs->sp)) {/*<llj>regs->sp栈顶地址</llj>*/
 			bad_area(regs, error_code, address);
 			return;
 		}

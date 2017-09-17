@@ -326,7 +326,7 @@ struct mm_struct {
 	unsigned long task_size;		/* size of task vm space */
 	unsigned long cached_hole_size; 	/* if non-zero, the largest hole below free_area_cache */
 	unsigned long free_area_cache;		/* first hole of size cached_hole_size or larger */
-	pgd_t * pgd;
+	pgd_t * pgd; /*<llj>指向该进程的页面目录</llj>*/
 	atomic_t mm_users;			/* How many users with user space? */
 	atomic_t mm_count;			/* How many references to "struct mm_struct" (users count as 1) */
 	int map_count;				/* number of VMAs */
@@ -352,7 +352,7 @@ struct mm_struct {
 	unsigned long reserved_vm;	/* VM_RESERVED|VM_IO pages */
 	unsigned long def_flags;
 	unsigned long nr_ptes;		/* Page table pages */
-	unsigned long start_code, end_code, start_data, end_data;
+	unsigned long start_code, end_code, start_data, end_data;/*<llj>代码段、数据段</llj>*/
 	unsigned long start_brk, brk, start_stack;
 	unsigned long arg_start, arg_end, env_start, env_end;
 
