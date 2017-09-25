@@ -27,8 +27,8 @@
  */
 #if defined(CONFIG_FLATMEM)
 
-#define __pfn_to_page(pfn)	(mem_map + ((pfn) - ARCH_PFN_OFFSET))
-#define __page_to_pfn(page)	((unsigned long)((page) - mem_map) + \
+#define __pfn_to_page(pfn)	(mem_map + ((pfn) - ARCH_PFN_OFFSET)) /*<llj>根据给出的页帧号计算出页对象的首地址</llj>*/
+#define __page_to_pfn(page)	((unsigned long)((page) - mem_map) + \ /*<llj>根据给出页地址求出对应的页帧号</llj>*/
 				 ARCH_PFN_OFFSET)
 #elif defined(CONFIG_DISCONTIGMEM)
 

@@ -307,7 +307,7 @@ static inline pgprotval_t massage_pgprot(pgprot_t pgprot)
 static inline pte_t pfn_pte(unsigned long page_nr, pgprot_t pgprot)
 {
 	return __pte(((phys_addr_t)page_nr << PAGE_SHIFT) |
-		     massage_pgprot(pgprot));
+		     massage_pgprot(pgprot));/*<llj>根据pfn和页表项的属性值合并成一个中间表项值</llj>*/
 }
 
 static inline pmd_t pfn_pmd(unsigned long page_nr, pgprot_t pgprot)
